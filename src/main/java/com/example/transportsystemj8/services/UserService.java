@@ -53,6 +53,10 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
+    public boolean validateNewPassword(String password, String confirmPassword){
+        return password.equals(confirmPassword);
+    }
+
     public void updatePassword(User user, String newPassword){
         user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
         userRepository.save(user);
