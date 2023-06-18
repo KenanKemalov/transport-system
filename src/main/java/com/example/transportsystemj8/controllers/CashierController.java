@@ -5,6 +5,7 @@ import com.example.transportsystemj8.data.repository.CashierRepository;
 import com.example.transportsystemj8.data.repository.TicketRepository;
 import com.example.transportsystemj8.data.repository.TripRepository;
 import com.example.transportsystemj8.services.CashierServiceImpl;
+import com.example.transportsystemj8.services.EmailService;
 import com.example.transportsystemj8.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.mail.MessagingException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -29,6 +31,9 @@ public class CashierController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    EmailService emailService;
 
     @Autowired
     private CashierServiceImpl cashierService;
@@ -58,13 +63,16 @@ public class CashierController {
 
     @PostMapping("/sell/ticket")
     public RedirectView processRequestTicketsForm(@RequestParam("customerName") String customerName,
-                                                  @RequestParam("selectedTrip") Integer tripId){
+                                                  @RequestParam("selectedTrip") Integer tripId,
+                                                  @RequestParam("email") String email) throws MessagingException {
         //boolean flag = false;
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         LocalDate date = LocalDate.now();
         System.out.println("post");
         System.out.println(customerName);
 //        System.out.println(selectedTrip);//??
+
+
         Trip trip = tripRepository.findTripByTripId(tripId);
         System.out.println(trip.toString());
         List<Ticket> allTickets = ticketRepository.findAllByTripId(trip);
@@ -75,6 +83,11 @@ public class CashierController {
                 ticket.setCashierId(cashierRepository.findCashierByCashierId(user.getUserId()));
                 ticket.setPurchaseDate(date);
                 ticketRepository.save(ticket);
+                //create the pdf file from html file and send it over email
+                if (!email.isEmpty()){
+                    emailService.sendEmail(email, ticket);
+                }
+                //end here
                 System.out.println(ticket);
                 System.out.println("ticket sold");
 //                flag = true;

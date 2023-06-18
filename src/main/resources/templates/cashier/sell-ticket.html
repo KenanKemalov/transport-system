@@ -12,6 +12,8 @@
 <form th:action="@{/sell/ticket}" th:method="post">
     <label for="customer-name">Enter customer name:</label>
     <input type="text" id="customer-name" name="customer-name" th:name="customerName" required><br>
+    <label for="email">Enter email:</label>
+    <input type="text" id="email" name="email" th:name="email"><br>
     <table>
         <tr>
             <th>locationFrom</th>
