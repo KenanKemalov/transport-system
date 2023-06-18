@@ -55,7 +55,7 @@ public class DistributorController {
         if (result.hasErrors()) {
             return "distributor/create-cashier";
         }
-        if (!userService.checkIfUserExists(cashier.getUser())){
+        if (!userService.checkIfUserExists(cashier.getUser()) && userService.validateUser(cashier.getUser().getPassword())){
 //        if (!usernameEntry.isPresent()){
             User user = new User();
             user.setUsername(cashier.getUser().getUsername());

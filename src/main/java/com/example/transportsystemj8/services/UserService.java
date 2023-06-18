@@ -17,9 +17,13 @@ import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class UserService implements UserDetailsService {
+
+    private Pattern passwordPattern = Pattern.compile("^(?=.*?[0-9]).{8,}$");
 
     //@Autowired
     private AuthenticationManager authenticationManager;
@@ -53,8 +57,16 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
+    public boolean validateUser(String password){
+        Matcher matcher = passwordPattern.matcher(password);
+        return matcher.matches();
+    }
+
     public boolean validateNewPassword(String password, String confirmPassword){
-        return password.equals(confirmPassword);
+        Matcher passwordMatcher = passwordPattern.matcher(password);
+        Matcher confirmPasswordMatcher = passwordPattern.matcher(confirmPassword);
+        return passwordMatcher.matches() && confirmPasswordMatcher.matches() && password.equals(confirmPassword);
+//        return password.equals(confirmPassword);
     }
 
     public void updatePassword(User user, String newPassword){

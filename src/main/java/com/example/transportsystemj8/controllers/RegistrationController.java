@@ -53,7 +53,7 @@ public class RegistrationController {
         if (result.hasErrors()) {
             return "company-registration";
         }
-        if (!userService.checkIfUserExists(company.getUser())){
+        if (!userService.checkIfUserExists(company.getUser()) && userService.validateUser(company.getUser().getPassword())){
 //        if (!usernameEntry.isPresent()){
             User user = new User();
             user.setUsername(company.getUser().getUsername());
@@ -86,7 +86,7 @@ public class RegistrationController {
             return "distributor-registration";
         }
 
-        if (!userService.checkIfUserExists(distributor.getUser())){
+        if (!userService.checkIfUserExists(distributor.getUser()) && userService.validateUser(distributor.getUser().getPassword())){
             User user = new User();
             user.setUsername(distributor.getUser().getUsername());
             user.setPassword(new BCryptPasswordEncoder().encode(distributor.getUser().getPassword()));
