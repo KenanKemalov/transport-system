@@ -1,10 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.w3.org/1999/html"
+      xsi:schemaLocation="http://www.thymeleaf.org " lang="en">
 <head>
-  <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <title>Admin Dashboard</title>
 </head>
 <body>
-<h2>Welcome, Admin!</h2>
+<div th:replace="~{fragments/navigation :: navigation-admin}"></div>
+
+<div class="row">
+    <div class="col-sm-2">
+        <div class="card" style="width: 19rem;">
+            <img src="https://media.istockphoto.com/id/535913739/vector/vector-map-with-pin-pointer-illustration.jpg?s=612x612&w=0&k=20&c=k70y-GYfXRUiuSdq7ie_BF9Mvry6XlgZV3ENFR-TDJk="
+                 class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Add location</h5>
+                <p class="card-text">Click here to add a new location</p>
+                <a href="/add/location" class="btn btn-primary stretched-link">Add location</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <div class="card" style="width: 19rem;">
+            <img src="https://media.istockphoto.com/id/535913739/vector/vector-map-with-pin-pointer-illustration.jpg?s=612x612&w=0&k=20&c=k70y-GYfXRUiuSdq7ie_BF9Mvry6XlgZV3ENFR-TDJk="
+                 class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Add trip type</h5>
+                <p class="card-text">Click here to add a new trip type</p>
+                <a href="/add/triptype" class="btn btn-primary stretched-link">Add trip type</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <div class="card" style="width: 19rem;">
+            <img src="https://media.istockphoto.com/id/535913739/vector/vector-map-with-pin-pointer-illustration.jpg?s=612x612&w=0&k=20&c=k70y-GYfXRUiuSdq7ie_BF9Mvry6XlgZV3ENFR-TDJk="
+                 class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Add transport type</h5>
+                <p class="card-text">Click here to add a new transport type</p>
+                <a href="/add/transporttype" class="btn btn-primary stretched-link">Add transport type</a>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Add your admin dashboard content here -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+
 </body>
 </html>

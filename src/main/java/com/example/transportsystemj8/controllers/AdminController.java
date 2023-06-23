@@ -45,4 +45,19 @@ public class AdminController {
         return "redirect:/update/password";
 
     }
+
+    @GetMapping("/add/location")
+    public String showAddLocationForm(){
+        return "admin/add-location";
+    }
+
+    @GetMapping("/add/triptype")
+    public String showAddTripTypeForm(){
+        return "admin/add-triptype";
+    }
+
+    @GetMapping("/add/transporttype")
+    public String showAddTransportTypeForm(){
+        return "admin/add-transporttype";
+    }
 }

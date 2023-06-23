@@ -38,6 +38,7 @@ public class DistributorController {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Distributor distributor = distributorRepository.findDistributorByDistributorId(user.getUserId());
         model.addAttribute("distributor", distributor);
+        model.addAttribute("role", user.getUserRole().name());
         return "distributor-dashboard";
     }
 

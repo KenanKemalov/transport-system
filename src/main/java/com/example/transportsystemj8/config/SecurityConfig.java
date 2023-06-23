@@ -24,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable() //dali?
                 .authorizeRequests()
                 .antMatchers("/login", "/register/**").permitAll()
-                .antMatchers("/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/admin/**", "/add/location", "/add/triptype", "/add/transporttype").hasAuthority("ADMIN")
                 //.and().formLogin().loginPage("/login").defaultSuccessUrl("/admin/dashboard").and().logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout").
                 .antMatchers("/company/**", "/create/trip", "/check/requests").hasAuthority("COMPANY")
                 .antMatchers("/request/tickets","/create/cashier","/distributor/**").hasAuthority("DISTRIBUTOR")

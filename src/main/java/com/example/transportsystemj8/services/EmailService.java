@@ -2,8 +2,10 @@ package com.example.transportsystemj8.services;
 
 import com.example.transportsystemj8.data.entity.Ticket;
 import com.example.transportsystemj8.data.entity.Trip;
+import jdk.internal.org.xml.sax.InputSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamSource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -16,19 +18,19 @@ import org.jsoup.helper.W3CDom;
 
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.xhtmlrenderer.context.StyleReference;
+import org.xhtmlrenderer.extend.UserAgentCallback;
+import org.xhtmlrenderer.layout.SharedContext;
+import org.xhtmlrenderer.pdf.ITextOutputDevice;
 import org.xhtmlrenderer.pdf.ITextRenderer;
-
-
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
+import org.xhtmlrenderer.pdf.ITextUserAgent;
 
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
 
 @Service
 public class EmailService {
@@ -40,7 +42,7 @@ public class EmailService {
 
 
     //still needs to be edited - does not include CSS in the pdf attachment
-    public void sendEmail(String toEmail, Ticket ticket) throws MessagingException {
+    public void sendEmail(String toEmail, Ticket ticket) throws MessagingException, IOException {
         Context context = new Context();
         context.setVariable("depstation", ticket.getTripId().getLocationFrom().getLocationName());
         context.setVariable("arrstation", ticket.getTripId().getLocationTo().getLocationName());
@@ -49,17 +51,37 @@ public class EmailService {
         context.setVariable("departure", ticket.getTripId().getDeparture() + " " + ticket.getTripId().getTimeOfDeparture());
         context.setVariable("seat", ticket.getSeatNumber());
         context.setVariable("arrival", ticket.getTripId().getArrival() + " " + ticket.getTripId().getTimeOfArrival());
-        String htmlContent = templateEngine.process("ticket-template", context);
-
+        String htmlContent = templateEngine.process("ticket/ticket-template", context);
+        System.out.println(htmlContent);
 
         // Generate PDF from HTML
-        ITextRenderer renderer = new ITextRenderer();
-        renderer.setDocumentFromString(htmlContent);
-        renderer.layout();
+        File htmlFile = new File("ticket/ticket-template");
+        File htmlFile1 = new File(templateEngine.process("ticket/ticket-template", context));
+        Document doc = Jsoup.parse(htmlContent, "UTF-8");
+        doc.outputSettings().syntax(Document.OutputSettings.Syntax.xml);
+        //OutputStream os = new ByteArrayOutputStream();
+        //OutputStream os = new FileOutputStream("C:/Users/Kenan/IdeaProjects/transport-system/src/main/resources/static/images/test.pdf");
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ITextRenderer renderer = new ITextRenderer();
+        SharedContext sharedContext = renderer.getSharedContext();
+        sharedContext.setPrint(true);
+        sharedContext.setInteractive(false);
+        String baseurl = FileSystems.getDefault().getPath("/ticket").toUri().toURL().toString();
+        renderer.setDocumentFromString(doc.html(), baseurl);
+        renderer.layout();
         renderer.createPDF(outputStream);
+        //renderer.createPDF(os);
+        System.out.println(outputStream);
 
 
+        //this works bro
+//        ITextRenderer renderer = new ITextRenderer();
+//        renderer.getSharedContext().setPrint(true);
+//        renderer.getSharedContext().setInteractive(false);
+//        renderer.setDocumentFromString(htmlContent);
+//        renderer.layout();
+//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//        renderer.createPDF(outputStream);
         // Send mail with attachment
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(message,true);
@@ -69,8 +91,6 @@ public class EmailService {
         messageHelper.setSubject("Trip ticket");
         InputStreamSource attachmentSource = new ByteArrayResource(outputStream.toByteArray());
         messageHelper.addAttachment("ticket.pdf", attachmentSource);
-//        FileSystemResource fileSystemResource = new FileSystemResource("/Users/Kenan/IdeaProjects/transport-system/mail/ticket-template.html");
-//        messageHelper.addAttachment(fileSystemResource.getFilename(),fileSystemResource);
         mailSender.send(message);
     }
 }

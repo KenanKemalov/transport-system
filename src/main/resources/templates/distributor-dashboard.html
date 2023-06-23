@@ -1,14 +1,53 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.thymeleaf.org " lang="en"><head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <meta charset="UTF-8">
     <title>Distributor dashboard</title>
 </head>
 <body>
 <div th:replace="~{fragments/navigation :: navigation-distributor}"></div>
 <p>Welcome, <span th:text="${distributor.distributorName}"></span>!</p>
+
+<section class="vh-50">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col col-md-9 col-lg-7 col-xl-5">
+                <!--                                <div class="position-absolute top-0 end-0">-->
+                <div class="card" style="border-radius: 15px;">
+                    <div class="card-body p-4">
+                        <div class="d-flex text-black">
+                            <div class="flex-shrink-0">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541"
+                                     alt="Generic placeholder image" class="img-fluid"
+                                     style="width: 180px; border-radius: 10px;">
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h5 class="mb-1"><span th:text="${distributor.distributorName}"></span></h5>
+                                <p class="mb-2 pb-1" style="color: #2b2a2a;"><span th:text="${role}"></span></p>
+                                <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
+                                     style="background-color: #efefef;">
+                                    <div>
+                                        <p class="small text-muted mb-1">Honorarium</p>
+                                        <p class="mb-0"><span th:text="${distributor.honorarium} + ' BGN'"></span></p>
+                                    </div>
+                                </div>
+                                <div class="d-flex pt-1">
+                                    <button type="button" class="btn btn-primary me-1 flex-grow-1">Update name
+                                    </button>
+                                    <button type="button" class="btn btn-primary flex-grow-1">Update password
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--                                        </div>-->
+            </div>
+        </div>
+    </div>
+</section>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>

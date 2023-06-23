@@ -13,5 +13,7 @@ public interface TicketRepository extends CrudRepository<Ticket, Integer> {
     @Query("SELECT t FROM Ticket t")
     List<Ticket> findAllTickets();
 
+
+
     List<Ticket> findAllByTripId(Trip trip);
 }

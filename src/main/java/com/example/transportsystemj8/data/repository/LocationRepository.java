@@ -13,4 +13,5 @@ public interface LocationRepository extends CrudRepository<Location, Integer> {
     @Query("SELECT t FROM Location t")
     List<Location> findAllLocations();
 
+    Location findByLocationName(String locationName);
 }

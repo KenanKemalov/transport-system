@@ -29,11 +29,11 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-    public String showLogin(@RequestParam(name = "confirmation", required = false) Boolean confirmation,
+    public String showLogin(//@RequestParam(name = "confirmation", required = false) Boolean confirmation,
                             Model model) {
-        if(confirmation != null){
-            model.addAttribute("confirmation", confirmation);
-        }
+//        if(confirmation != null){
+//            model.addAttribute("confirmation", confirmation);
+//        }
         model.addAttribute("user", new User());
         return "login";  // This will map to the common login page
     }
