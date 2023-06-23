@@ -25,8 +25,8 @@
         <tr th:each="req : ${allRequests}">
             <td th:text="${req.distributorId.distributorName}"></td>
             <td th:text="${req.ticketCount}"></td>
-            <td th:text="${req.tripId.locationFrom}"></td>
-            <td th:text="${req.tripId.locationTo}"></td>
+            <td th:text="${req.tripId.locationFrom.locationName}"></td>
+            <td th:text="${req.tripId.locationTo.locationName}"></td>
             <td th:text="${req.tripId.departure}"></td>
             <td th:text="${req.tripId.timeOfDeparture}"></td>
             <td th:text="${req.tripId.arrival}"></td>

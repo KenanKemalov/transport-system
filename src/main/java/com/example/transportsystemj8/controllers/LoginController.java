@@ -2,7 +2,6 @@ package com.example.transportsystemj8.controllers;
 
 import com.example.transportsystemj8.data.entity.Company;
 import com.example.transportsystemj8.data.entity.User;
-import com.example.transportsystemj8.data.entity.UserDto;
 import com.example.transportsystemj8.data.entity.UserRole;
 import com.example.transportsystemj8.services.UserService;
 import org.springframework.security.core.Authentication;

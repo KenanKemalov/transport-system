@@ -131,5 +131,13 @@ public class CompanyController {
         return new RedirectView("/check/requests");
     }
 
+    @GetMapping("/check/sold/tickets")
+    public String checkSoldTickets(Model model){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("allTrips", tripService.findAllByCompany(companyRepository.findCompanyByCompanyId(user.getUserId())));
+        model.addAttribute("rep", ticketRepository);
+        return "company/check-sold-tickets";
+    }
+
 
 }

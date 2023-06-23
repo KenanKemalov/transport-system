@@ -15,6 +15,8 @@ public interface TripRepository extends CrudRepository<Trip, Integer> {
     @Query("SELECT t FROM Trip t")
     List<Trip> findAllTrips();
 
+    List<Trip> findAllByCompanyId(Company company);
+
     Trip findTripByTripId(Integer id);
 
     List<Trip> findAllByDepartureAfterAndArrivalBeforeAndLocationFromAndLocationTo(LocalDate departure, LocalDate arrival, Location locationFrom, Location locationTo);

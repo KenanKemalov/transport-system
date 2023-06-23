@@ -63,20 +63,40 @@ public class CashierController {
 
 
     @GetMapping("/sell/ticket")
-    public String showCheckRequestsForm(Model model){
-        //model.addAttribute("ticket", new Ticket());
-
-//        List<Trip> allTrips = (List<Trip>) model.getAttribute("allTrips");
-
-        if(model.getAttribute("allTrips") == null){
-            model.addAttribute("allTrips", tripRepository.findAll());
+    public String showCheckRequestsForm(Model model,
+                                        @RequestParam(name = "location-from", required = false) String locationFrom,
+                                        @RequestParam(name = "location-to", required = false) String locationTo,
+                                        @RequestParam(name = "departure", required = false) String departure,
+                                        @RequestParam(name = "arrival", required = false) String arrival){
+        List<Trip> allTrips;
+        LocalDate departureDate;
+        LocalDate arrivalDate;
+//        if (departure != null && !departure.isEmpty() && arrival != null && !arrival.isEmpty()){
+//            departureDate = LocalDate.parse(departure);
+//            arrivalDate = LocalDate.parse(arrival);
+//        }
+        if(locationFrom != null && !locationFrom.isEmpty() && locationTo != null && !locationTo.isEmpty()){
+            System.out.println("lokaciite ne sa null " + locationFrom + " " + locationTo);
+            if(departure != null && !departure.isEmpty() && arrival != null && !arrival.isEmpty()){
+                departureDate = LocalDate.parse(departure);
+                arrivalDate = LocalDate.parse(arrival);
+                allTrips = tripService.findAllTripsByFullFilter(departureDate, arrivalDate,
+                    locationRepository.findByLocationName(locationFrom), locationRepository.findByLocationName(locationTo));
+            } else {
+                allTrips = tripService.findAllByLocations(locationRepository.findByLocationName(locationFrom), locationRepository.findByLocationName(locationTo));
+            }
+        } else {
+            System.out.println("ludsi");
+            allTrips = tripService.findAll();
         }
 
+        model.addAttribute("allTrips", allTrips);
+//        model.addAttribute("selectedTrip", new Trip());
+//        System.out.println("success");
         model.addAttribute("selectedTrip", new Trip());
-        //model.addAttribute("locations", locationRepository.findAllLocations());
-        System.out.println("da ama ne");
+        model.addAttribute("locations", locationRepository.findAllLocations());
+//        System.out.println("da ama ne");
         return "cashier/sell-ticket";
-        //return "cashier/sell-ticket";
     }
 
 //    @PostMapping(value = "/sell/ticket", params = "filter")
