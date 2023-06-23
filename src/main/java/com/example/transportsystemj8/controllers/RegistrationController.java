@@ -65,7 +65,7 @@ public class RegistrationController {
             companyService.saveCompany(company);
             userService.saveUser(user);
             System.out.println("company saved");
-            return "redirect:/login";
+            return "redirect:/register/company";
         }
         System.out.println("company not saved");
         return "redirect:/r/";
@@ -97,7 +97,7 @@ public class RegistrationController {
             System.out.println(distributor.toString());
             distributorService.saveDistributor(distributor);
             userService.saveUser(user);
-            return "redirect:/login";
+            return "redirect:/register/distributor";
         }
         return "redirect:/r/";
     }

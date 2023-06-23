@@ -11,4 +11,6 @@ import java.util.List;
 public interface TransportTypeRepository extends CrudRepository<TransportType, Integer> {
     @Query("SELECT t FROM TransportType t")
     List<TransportType> findAllTransportTypes();
+
+    TransportType findTransportTypeByTransportTypeName(String name);
 }

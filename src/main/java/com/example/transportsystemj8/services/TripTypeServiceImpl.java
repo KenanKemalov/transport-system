@@ -1,5 +1,6 @@
 package com.example.transportsystemj8.services;
 
+import com.example.transportsystemj8.data.entity.TransportType;
 import com.example.transportsystemj8.data.entity.TripType;
 import com.example.transportsystemj8.data.repository.TripTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,21 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-//@Service
+@Service
 public class TripTypeServiceImpl implements TripTypeService{
+    @Autowired
+    TripTypeRepository tripTypeRepository;
+
+    @Override
+    public void saveTripType(TripType tripType) {
+        tripTypeRepository.save(tripType);
+    }
+
+    public boolean checkIfTripTypeExists(TripType tripType){
+//        Optional<User> foundUser = userRepository.findByUsernameAndUserRole(user.getUsername(), user.getUserRole());
+        TripType foundTripType = tripTypeRepository.findTripTypeByTripTypeName(tripType.getTripTypeName());
+        return foundTripType != null;
+    }
 //    @Autowired
 //    private TripTypeRepository tripTypeRepository;
 //

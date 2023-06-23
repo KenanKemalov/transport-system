@@ -23,12 +23,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable() //dali?
                 .authorizeRequests()
-                .antMatchers("/login", "/register/**").permitAll()
-                .antMatchers("/admin/**", "/add/location", "/add/triptype", "/add/transporttype").hasAuthority("ADMIN")
+                .antMatchers("/login").permitAll()
+                .antMatchers("/admin/**", "/add/location", "/add/triptype", "/add/transporttype", "/register/**").hasAuthority("ADMIN")
                 //.and().formLogin().loginPage("/login").defaultSuccessUrl("/admin/dashboard").and().logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout").
                 .antMatchers("/company/**", "/create/trip", "/check/requests", "/check/sold/tickets").hasAuthority("COMPANY")
-                .antMatchers("/request/tickets","/create/cashier","/distributor/**").hasAuthority("DISTRIBUTOR")
+                .antMatchers("/request/tickets","/distributor/**").hasAuthority("DISTRIBUTOR")
                 .antMatchers("/cashier/**, /sell/ticket").hasAuthority("CASHIER")
+                .antMatchers("/create/cashier").hasAnyAuthority("ADMIN", "DISTRIBUTOR")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

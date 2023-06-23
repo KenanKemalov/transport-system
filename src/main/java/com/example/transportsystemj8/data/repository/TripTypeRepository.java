@@ -12,4 +12,6 @@ public interface TripTypeRepository extends CrudRepository<TripType, Integer> {
 
     @Query("SELECT t FROM TripType t")
     List<TripType> findAllTripTypes();
+
+    TripType findTripTypeByTripTypeName(String name);
 }
