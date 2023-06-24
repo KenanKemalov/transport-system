@@ -18,4 +18,6 @@ public interface TicketRepository extends CrudRepository<Ticket, Integer> {
     Integer findAllSoldTicketsByTrip(Trip trip);
 
     List<Ticket> findAllByTripId(Trip trip);
+
+
 }

@@ -1,10 +1,7 @@
 package com.example.transportsystemj8.controllers;
 
 import com.example.transportsystemj8.data.entity.*;
-import com.example.transportsystemj8.data.repository.CashierRepository;
-import com.example.transportsystemj8.data.repository.LocationRepository;
-import com.example.transportsystemj8.data.repository.TicketRepository;
-import com.example.transportsystemj8.data.repository.TripRepository;
+import com.example.transportsystemj8.data.repository.*;
 import com.example.transportsystemj8.services.CashierServiceImpl;
 import com.example.transportsystemj8.services.EmailService;
 import com.example.transportsystemj8.services.TripServiceImpl;
@@ -36,16 +33,19 @@ public class CashierController {
     private UserService userService;
 
     @Autowired
-    EmailService emailService;
+    private EmailService emailService;
 
     @Autowired
     private CashierServiceImpl cashierService;
 
     @Autowired
-    CashierRepository cashierRepository;
+    private TransportTypeRepository transportTypeRepository;
 
     @Autowired
-    TicketRepository ticketRepository;
+    private CashierRepository cashierRepository;
+
+    @Autowired
+    private TicketRepository ticketRepository;
 
     @Autowired
     private TripRepository tripRepository;
@@ -67,88 +67,28 @@ public class CashierController {
                                         @RequestParam(name = "location-from", required = false) String locationFrom,
                                         @RequestParam(name = "location-to", required = false) String locationTo,
                                         @RequestParam(name = "departure", required = false) String departure,
-                                        @RequestParam(name = "arrival", required = false) String arrival){
-        List<Trip> allTrips;
-        LocalDate departureDate;
-        LocalDate arrivalDate;
-//        if (departure != null && !departure.isEmpty() && arrival != null && !arrival.isEmpty()){
-//            departureDate = LocalDate.parse(departure);
-//            arrivalDate = LocalDate.parse(arrival);
-//        }
-        if(locationFrom != null && !locationFrom.isEmpty() && locationTo != null && !locationTo.isEmpty()){
-            System.out.println("lokaciite ne sa null " + locationFrom + " " + locationTo);
-            if(departure != null && !departure.isEmpty() && arrival != null && !arrival.isEmpty()){
+                                        @RequestParam(name = "arrival", required = false) String arrival,
+                                        @RequestParam(name = "transport-type", required = false) String transportType){
+//        List<Trip> allTrips;
+        LocalDate departureDate = null;
+        LocalDate arrivalDate = null;
+        if(departure != null && !departure.isEmpty() && arrival != null && !arrival.isEmpty()) {
                 departureDate = LocalDate.parse(departure);
                 arrivalDate = LocalDate.parse(arrival);
-                allTrips = tripService.findAllTripsByFullFilter(departureDate, arrivalDate,
-                    locationRepository.findByLocationName(locationFrom), locationRepository.findByLocationName(locationTo));
-            } else {
-                allTrips = tripService.findAllByLocations(locationRepository.findByLocationName(locationFrom), locationRepository.findByLocationName(locationTo));
-            }
-        } else {
-            System.out.println("ludsi");
-            allTrips = tripService.findAll();
         }
+        List<Trip> allTrips = tripService.filterTrips(departureDate, arrivalDate,
+                locationRepository.findByLocationName(locationFrom), locationRepository.findByLocationName(locationTo),
+                transportTypeRepository.findTransportTypeByTransportTypeName(transportType));
+
+        allTrips = tripService.clearOldTrips(allTrips);
 
         model.addAttribute("allTrips", allTrips);
-//        model.addAttribute("selectedTrip", new Trip());
-//        System.out.println("success");
         model.addAttribute("selectedTrip", new Trip());
         model.addAttribute("locations", locationRepository.findAllLocations());
-//        System.out.println("da ama ne");
+        model.addAttribute("transporttypes", transportTypeRepository.findAllTransportTypes());
+        model.addAttribute("rep", ticketRepository);
         return "cashier/sell-ticket";
     }
-
-//    @PostMapping(value = "/sell/ticket", params = "filter")
-//    public RedirectView showCheckRequestsFilter(Model model, String locationFrom, String locationTo, LocalDate departure, LocalDate arrival){
-//        //model.addAttribute("ticket", new Ticket());
-//        List<Trip> allTrips;
-//        if(departure == null || arrival == null){
-//            if (locationFrom != null && locationTo != null){
-//                allTrips = tripService.findAllByLocations(locationRepository.findByLocationName(locationFrom), locationRepository.findByLocationName(locationTo));
-//            } else {
-//                allTrips = tripService.findAll();
-//                //allTrips = tripRepository.findAll();
-//            }
-//        } else if (locationFrom != null && locationTo != null){
-//            allTrips = tripService.findAllTripsByFullFilter(departure, arrival,
-//                    locationRepository.findByLocationName(locationFrom), locationRepository.findByLocationName(locationTo));
-//        } else {
-//            allTrips = tripService.findAll();
-//        }
-//
-//        model.addAttribute("allTrips", allTrips);
-//        model.addAttribute("selectedTrip", new Trip());
-//        System.out.println("success");
-//        //model.addAttribute("locations", locationRepository.findAllLocations());
-//        return new RedirectView("/sell/ticket");
-//        //return "cashier/sell-ticket";
-//    }
-
-//    @GetMapping("/sell/ticket/filter")
-//    public String Filter(Model model, String locationFrom, String locationTo, LocalDate departure, LocalDate arrival){
-//        //model.addAttribute("ticket", new Ticket());
-//        List<Trip> allTrips;
-//        if(departure == null || arrival == null){
-//            if (locationFrom != null && locationTo != null){
-//                allTrips = tripService.findAllByLocations(locationRepository.findByLocationName(locationFrom), locationRepository.findByLocationName(locationTo));
-//            } else {
-//                allTrips = tripService.findAll();
-//                //allTrips = tripRepository.findAll();
-//            }
-//        } else if (locationFrom != null && locationTo != null){
-//            allTrips = tripService.findAllTripsByFullFilter(departure, arrival,
-//                    locationRepository.findByLocationName(locationFrom), locationRepository.findByLocationName(locationTo));
-//        } else {
-//            allTrips = tripService.findAll();
-//        }
-//
-//        model.addAttribute("allTrips", allTrips);
-//        model.addAttribute("selectedTrip", new Trip());
-//        //model.addAttribute("locations", locationRepository.findAllLocations());
-//        return "/sell/ticket";
-//        //return "cashier/sell-ticket";
-//    }
 
     @PostMapping(value = "/sell/ticket", params = "sell")
     public RedirectView processRequestTicketsForm(@RequestParam("customerName") String customerName,
@@ -179,8 +119,6 @@ public class CashierController {
                 //end here
                 System.out.println(ticket);
                 System.out.println("ticket sold");
-//                flag = true;
- //               model.addAttribute("selectedTrip", selectedTrip);//??
                 return new RedirectView("/sell/ticket");
             }
         }

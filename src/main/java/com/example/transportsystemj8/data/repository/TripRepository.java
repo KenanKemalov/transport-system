@@ -2,6 +2,7 @@ package com.example.transportsystemj8.data.repository;
 
 import com.example.transportsystemj8.data.entity.Company;
 import com.example.transportsystemj8.data.entity.Location;
+import com.example.transportsystemj8.data.entity.TransportType;
 import com.example.transportsystemj8.data.entity.Trip;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -23,6 +24,7 @@ public interface TripRepository extends CrudRepository<Trip, Integer> {
 
     List<Trip> findAllByLocationFromAndLocationTo(Location locationFrom, Location locationTo);
 
-//    @Query("SELECT ")
-//    List<Trip> findAllByCompanyId(Company company);
+    List<Trip> findAllByTransportTypeId(TransportType transportType);
+
+    List<Trip> findAllByDepartureAfterAndArrivalBefore(LocalDate departure, LocalDate arrival);
 }

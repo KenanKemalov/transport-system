@@ -10,14 +10,9 @@
 <body>
 <div th:replace="~{fragments/navigation :: navigation-cashier}"></div>
 <form th:action="@{/sell/ticket}" method="get">
-<!--    <label for="location-from">LocationFrom:</label>-->
-<!--    &lt;!&ndash;    <input type="text" id="location-from" name="keyword">&ndash;&gt;-->
-<!--    <input type="text" id="location-from" name="location-from">-->
-<!--    <label for="location-to">LocationTo:</label>-->
-<!--    <input type="text" id="location-to"  name="location-from">-->
-
     <label for="location-from">Departure location:</label>
     <select name="location-from" id="location-from">
+        <option></option>
         <option th:each="location : ${locations}"
                 th:value="${location.locationName}"
                 th:text="${location.locationName}">
@@ -26,20 +21,31 @@
 
     <label for="location-to">Arrival location:</label>
     <select name="location-to" id="location-to">
+        <option></option>
         <option th:each="location : ${locations}"
                 th:value="${location.locationName}"
                 th:text="${location.locationName}">
         </option>
     </select>
 
-    <label for="departure">DepartureDate:</label>
+    <label for="transport-type">Transport type:</label>
+    <select name="transport-type" id="transport-type">
+        <option></option>
+        <option th:each="t : ${transporttypes}"
+                th:value="${t.transportTypeName}"
+                th:text="${t.transportTypeName}">
+        </option>
+    </select>
+    <br><br>
+    <h4>Departure date</h4>
+    <label for="departure">From:</label>
     <input type="date" id="departure" name="departure">
-    <label for="arrival">ArrivalDate:</label>
+    <label for="arrival">To:</label>
     <input type="date" id="arrival" name="arrival">
 
     <button type="submit">go</button>
-    <!--    <input type="submit" name="filter" value="Filter">-->
 </form>
+<br><br>
 <form th:action="@{/sell/ticket}" th:method="post">
     <label for="customer-name">Enter customer name:</label>
     <input type="text" id="customer-name" name="customer-name" th:name="customerName">
@@ -63,6 +69,7 @@
             <th>transportTypeName</th>
             <th>tripTypeName</th>
             <th>companyName</th>
+            <th>Tickets left</th>
             <th>pick a request</th>
         </tr>
         <tr th:each="t : ${allTrips}">
@@ -75,6 +82,7 @@
             <td th:text="${t.transportTypeId.transportTypeName}"></td>
             <td th:text="${t.tripTypeId.tripTypeName}"></td>
             <td th:text="${t.companyId.companyName}"></td>
+            <td th:text="${t.capacity} - ${rep.findAllSoldTicketsByTrip(t)}"></td>
             <td>
                 <label>
                     <!--                    <input type="radio" th:field="*{selectedTrip}" th:value="${t}" />-->
