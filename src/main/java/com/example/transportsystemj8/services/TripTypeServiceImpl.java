@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class TripTypeServiceImpl implements TripTypeService{
     @Autowired
-    TripTypeRepository tripTypeRepository;
+    private TripTypeRepository tripTypeRepository;
 
     @Override
     public void saveTripType(TripType tripType) {
@@ -22,6 +22,18 @@ public class TripTypeServiceImpl implements TripTypeService{
 //        Optional<User> foundUser = userRepository.findByUsernameAndUserRole(user.getUsername(), user.getUserRole());
         TripType foundTripType = tripTypeRepository.findTripTypeByTripTypeName(tripType.getTripTypeName());
         return foundTripType != null;
+    }
+
+    public List<TripType> findAll(){
+        return tripTypeRepository.findAllTripTypes();
+    }
+
+    public void deleteTripType(TripType tripType){
+        tripTypeRepository.delete(tripType);
+    }
+
+    public TripType findTripTypeByName(String name){
+        return tripTypeRepository.findTripTypeByTripTypeName(name);
     }
 //    @Autowired
 //    private TripTypeRepository tripTypeRepository;

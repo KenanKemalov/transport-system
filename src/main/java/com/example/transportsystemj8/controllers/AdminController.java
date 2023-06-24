@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 public class AdminController {
 
@@ -115,4 +117,60 @@ public class AdminController {
             return "redirect:/add/transporttype";
         }
         return "redirect:/add/transporttype";
-    }}
+    }
+
+    @GetMapping("/delete/location")
+    public String showDeleteLocationForm(Model model){
+        List<Location> locations = locationService.findAll();
+        model.addAttribute("locations", locations);
+        return "admin/delete-location";
+    }
+
+    @PostMapping("/delete/location")
+    public String processDeleteLocationForm(@RequestParam("location") String location){
+
+        if(locationService.checkIfLocationExists(locationService.findLocationByName(location))){
+            locationService.deleteLocation(locationService.findLocationByName(location));
+            return "redirect:/delete/location";
+        }
+        return "redirect:/delete/location";
+    }
+
+
+
+    @GetMapping("/delete/triptype")
+    public String showDeleteTripTypeForm(Model model){
+        List<TripType> tripTypes = tripTypeService.findAll();
+        model.addAttribute("triptypes", tripTypes);
+        return "admin/delete-triptype";
+    }
+
+    @PostMapping("/delete/triptype")
+    public String processDeleteTripTypeForm(@RequestParam("trip-type") String tripType){
+
+        if(tripTypeService.checkIfTripTypeExists(tripTypeService.findTripTypeByName(tripType))){
+            tripTypeService.deleteTripType(tripTypeService.findTripTypeByName(tripType));
+            return "redirect:/delete/triptype";
+        }
+        return "redirect:/delete/triptype";
+    }
+
+
+    @GetMapping("/delete/transporttype")
+    public String showDeleteTransportTypeForm(Model model){
+        List<TransportType> transportTypes = transportTypeService.findAll();
+        model.addAttribute("transporttypes", transportTypes);
+        return "admin/delete-transporttype";
+    }
+
+    @PostMapping("/delete/transporttype")
+    public String processDeleteTransformTypeForm(@RequestParam("transport-type") String transportType){
+
+        if(transportTypeService.checkIfTransportTypeExists(transportTypeService.findTransportTypeByName(transportType))){
+            transportTypeService.deleteTransportType(transportTypeService.findTransportTypeByName(transportType));
+            return "redirect:/delete/transporttype";
+        }
+        return "redirect:/delete/transporttype";
+    }
+
+}
