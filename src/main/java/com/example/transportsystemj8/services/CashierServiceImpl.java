@@ -6,6 +6,8 @@ import com.example.transportsystemj8.data.repository.CashierRepository;
 import com.example.transportsystemj8.data.repository.CompanyRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CashierServiceImpl implements CashierService{
 
@@ -17,5 +19,13 @@ public class CashierServiceImpl implements CashierService{
     @Override
     public void saveCashier(Cashier cashier) {
         cashierRepository.save(cashier);
+    }
+
+    public List<Cashier> findAllCashier(){
+        return cashierRepository.findAllCashier();
+    }
+
+    public Cashier findCashierById(Integer cashierId){
+        return cashierRepository.findCashierByCashierId(cashierId);
     }
 }

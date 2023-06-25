@@ -5,6 +5,8 @@ import com.example.transportsystemj8.data.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CompanyServiceImpl implements CompanyService{
     //@Autowired
@@ -16,5 +18,13 @@ public class CompanyServiceImpl implements CompanyService{
     @Override
     public void saveCompany(Company company) {
         companyRepository.save(company);
+    }
+
+    public Company findCompanyById(Integer companyId){
+        return companyRepository.findCompanyByCompanyId(companyId);
+    }
+
+    public List<Company> findAllCompanies(){
+        return companyRepository.findAllCompanies();
     }
 }

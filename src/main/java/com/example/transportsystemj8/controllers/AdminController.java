@@ -1,9 +1,6 @@
 package com.example.transportsystemj8.controllers;
 
-import com.example.transportsystemj8.data.entity.Location;
-import com.example.transportsystemj8.data.entity.TransportType;
-import com.example.transportsystemj8.data.entity.TripType;
-import com.example.transportsystemj8.data.entity.User;
+import com.example.transportsystemj8.data.entity.*;
 import com.example.transportsystemj8.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,6 +29,15 @@ public class AdminController {
 
     @Autowired
     private TransportTypeServiceImpl transportTypeService;
+
+    @Autowired
+    private CashierServiceImpl cashierService;
+
+    @Autowired
+    private CompanyServiceImpl companyService;
+
+    @Autowired
+    private DistributorServiceImpl distributorService;
 
     @GetMapping("/admin/dashboard")
     public String showCompanyDashboard() {
@@ -172,5 +178,59 @@ public class AdminController {
         }
         return "redirect:/delete/transporttype";
     }
+
+
+    @GetMapping("/update/cashier")
+    public String showUpdateCashierForm(Model model){
+        List<Cashier> cashiers = cashierService.findAllCashier();
+        model.addAttribute("cashiers", cashiers);
+        return "admin/update-cashier";
+    }
+
+    @PostMapping("/update/cashier")
+    public String processUpdateCashierForm(@RequestParam("selectedCashier") Integer cashierId,
+                                           @RequestParam("honorarium") Double honorarium){
+
+        Cashier cashier = cashierService.findCashierById(cashierId);
+        cashier.setHonorarium(honorarium);
+        cashierService.saveCashier(cashier);
+        return "redirect:/update/cashier";
+    }
+
+    @GetMapping("/update/company")
+    public String showUpdateCompanyForm(Model model){
+        List<Company> companies = companyService.findAllCompanies();
+        model.addAttribute("companies", companies);
+        return "admin/update-company";
+    }
+
+    @PostMapping("/update/company")
+    public String processUpdateCompanyForm(@RequestParam("selectedCompany") Integer companyId,
+                                           @RequestParam("honorarium") Double honorarium){
+
+        Company company = companyService.findCompanyById(companyId);
+        company.setHonorarium(honorarium);
+        companyService.saveCompany(company);
+        return "redirect:/update/company";
+    }
+
+    @GetMapping("/update/distributor")
+    public String showUpdateDistributorForm(Model model){
+        List<Distributor> distributors = distributorService.findAllDistributors();
+        model.addAttribute("distributors", distributors);
+        return "admin/update-distributor";
+    }
+
+    @PostMapping("/update/distributor")
+    public String processUpdateDistributorForm(@RequestParam("selectedDistributor") Integer distributorId,
+                                           @RequestParam("honorarium") Double honorarium){
+
+        Distributor distributor = distributorService.findDistributorById(distributorId);
+        distributor.setHonorarium(honorarium);
+        distributorService.saveDistributor(distributor);
+        return "redirect:/update/distributor";
+    }
+
+
 
 }
