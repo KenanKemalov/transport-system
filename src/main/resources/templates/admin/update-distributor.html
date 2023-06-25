@@ -2,38 +2,48 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.thymeleaf.org " lang="en">
 <head>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-  <meta charset="UTF-8">
-  <title>Update distributor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Update distributor</title>
 </head>
 <body>
 <div th:replace="~{fragments/navigation :: navigation-admin}"></div>
 
-<form th:action="@{/update/distributor}" th:method="post">
-  <label for="honorarium">New honorarium:</label>
-  <input type="number" id="honorarium" name="honorarium">
-  <button type="submit">Update</button>
-  <table>
-    <tr>
-      <th>Name</th>
-      <th>Honorarium</th>
-      <th>Username</th>
-      <th>Pick distributor</th>
-    </tr>
-    <tr th:each="c : ${distributors}">
-      <td th:text="${c.distributorName}"></td>
-      <td th:text="${c.honorarium}"></td>
-      <td th:text="${c.user.username}"></td>
-      <td>
-        <label>
-          <!--                    <input type="radio" th:field="*{selectedTrip}" th:value="${t}" />-->
-          <input type="radio" th:name="selectedDistributor" th:value="${c.distributorId}"/>
-        </label>
-      </td>
-    </tr>
-  </table>
-</form>
+<div class="container">
+
+    <form th:action="@{/update/distributor}" th:method="post">
+        <div class="form-outline d-flex justify-content-center">
+            <label for="honorarium" class="form-label text-center">New honorarium:</label>
+        </div>
+        <div class="form-group mb-4  d-flex justify-content-center">
+            <input type="number" id="honorarium" name="honorarium" class="form-control form-control-lg"
+                   style="width: 30%" required>
+        </div>
+        <div class="form-group d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary btn-block mb-4" style="width: 30%">Update</button>
+        </div>
+        <table class="table table-bordered">
+            <tr>
+                <th scope="col" class="text-center">Name</th>
+                <th scope="col" class="text-center">Honorarium</th>
+                <th scope="col" class="text-center">Username</th>
+                <th scope="col" class="text-center">Pick distributor</th>
+            </tr>
+            <tr th:each="c : ${distributors}">
+                <td th:text="${c.distributorName}" class="text-center"></td>
+                <td th:text="${c.honorarium}" class="text-center"></td>
+                <td th:text="${c.user.username}" class="text-center"></td>
+                <td class="text-center">
+                    <label>
+                        <!--                    <input type="radio" th:field="*{selectedTrip}" th:value="${t}" />-->
+                        <input type="radio" th:name="selectedDistributor" th:value="${c.distributorId}"/>
+                    </label>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"

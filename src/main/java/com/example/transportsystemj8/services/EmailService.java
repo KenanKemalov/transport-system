@@ -88,6 +88,7 @@ public class EmailService {
         messageHelper.setFrom("transport.system2000@gmail.com");
         messageHelper.setTo(toEmail);
         messageHelper.setText("In the attachment you will find the ticket for your trip. Thank you for using our services.");
+//        messageHelper.setText(htmlContent, true);
         messageHelper.setSubject("Trip ticket");
         InputStreamSource attachmentSource = new ByteArrayResource(outputStream.toByteArray());
         messageHelper.addAttachment("ticket.pdf", attachmentSource);
