@@ -17,6 +17,9 @@ public interface TicketRepository extends CrudRepository<Ticket, Integer> {
     @Query("SELECT count(t) FROM Ticket t WHERE t.tripId=?1 AND t.customerName != '-NOT SOLD-'")
     Integer findAllSoldTicketsByTrip(Trip trip);
 
+    @Query("SELECT count(t) FROM Ticket t WHERE t.tripId=?1")
+    Integer findAllCountByTripId(Trip trip);
+
     List<Ticket> findAllByTripId(Trip trip);
 
 

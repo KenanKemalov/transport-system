@@ -5,42 +5,47 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Check requests</title>
 </head>
 <body>
 <div th:replace="~{fragments/navigation :: navigation-company}"></div>
-<form th:action="@{/check/requests}" th:method="post" th:object="${request}">
-    <label>Choose a request</label>
-    <table>
-        <tr>
-            <th>Distributor</th>
-            <th>Ticket count</th>
-            <th>locationFrom</th>
-            <th>locationTo</th>
-            <th>departure</th>
-            <th>timeOfDeparture</th>
-            <th>arrival</th>
-            <th>timeOfArrival</th>
-        </tr>
-        <tr th:each="req : ${allRequests}">
-            <td th:text="${req.distributorId.distributorName}"></td>
-            <td th:text="${req.ticketCount}"></td>
-            <td th:text="${req.tripId.locationFrom.locationName}"></td>
-            <td th:text="${req.tripId.locationTo.locationName}"></td>
-            <td th:text="${req.tripId.departure}"></td>
-            <td th:text="${req.tripId.timeOfDeparture}"></td>
-            <td th:text="${req.tripId.arrival}"></td>
-            <td th:text="${req.tripId.timeOfArrival}"></td>
-            <td>
-                <input type="radio" th:name="selectedRequest" th:value="${req.requestId}" />
-            </td>
-        </tr>
-    </table>
-
-    <input type="submit" name="accept" value="Accept">
-    <input type="submit" name="reject" value="Reject">
-</form>
+<div class="container">
+    <form th:action="@{/check/requests}" th:method="post" th:object="${request}">
+        <h2 class="text-center">Choose a request</h2>
+        <table class="table table-bordered">
+            <tr>
+                <th scope="col" class="text-center">Distributor</th>
+                <th scope="col" class="text-center">Ticket count</th>
+                <th scope="col" class="text-center">locationFrom</th>
+                <th scope="col" class="text-center">locationTo</th>
+                <th scope="col" class="text-center">departure</th>
+                <th scope="col" class="text-center">timeOfDeparture</th>
+                <th scope="col" class="text-center">arrival</th>
+                <th scope="col" class="text-center">timeOfArrival</th>
+                <th scope="col" class="text-center">Pick request</th>
+            </tr>
+            <tr th:each="req : ${allRequests}">
+                <td class="text-center" th:text="${req.distributorId.distributorName}"></td>
+                <td class="text-center" th:text="${req.ticketCount}"></td>
+                <td class="text-center" th:text="${req.tripId.locationFrom.locationName}"></td>
+                <td class="text-center" th:text="${req.tripId.locationTo.locationName}"></td>
+                <td class="text-center" th:text="${req.tripId.departure}"></td>
+                <td class="text-center" th:text="${req.tripId.timeOfDeparture}"></td>
+                <td class="text-center" th:text="${req.tripId.arrival}"></td>
+                <td class="text-center" th:text="${req.tripId.timeOfArrival}"></td>
+                <td class="text-center">
+                    <input type="radio" th:name="selectedRequest" th:value="${req.requestId}" required/>
+                </td>
+            </tr>
+        </table>
+        <div class="form-group d-flex justify-content-center gap-3">
+            <input type="submit" name="accept" value="Accept" class="btn btn-success btn-block mb-4">
+            <input type="submit" name="reject" value="Reject" class="btn btn-danger btn-block mb-4">
+        </div>
+    </form>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
 </body>
 </html>
