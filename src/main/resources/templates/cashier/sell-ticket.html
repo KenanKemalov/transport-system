@@ -9,92 +9,144 @@
 </head>
 <body>
 <div th:replace="~{fragments/navigation :: navigation-cashier}"></div>
-<form th:action="@{/sell/ticket}" method="get">
-    <label for="location-from">Departure location:</label>
-    <select name="location-from" id="location-from">
-        <option></option>
-        <option th:each="location : ${locations}"
-                th:value="${location.locationName}"
-                th:text="${location.locationName}">
-        </option>
-    </select>
 
-    <label for="location-to">Arrival location:</label>
-    <select name="location-to" id="location-to">
-        <option></option>
-        <option th:each="location : ${locations}"
-                th:value="${location.locationName}"
-                th:text="${location.locationName}">
-        </option>
-    </select>
+<div class="container">
 
-    <label for="transport-type">Transport type:</label>
-    <select name="transport-type" id="transport-type">
-        <option></option>
-        <option th:each="t : ${transporttypes}"
-                th:value="${t.transportTypeName}"
-                th:text="${t.transportTypeName}">
-        </option>
-    </select>
+    <form th:action="@{/sell/ticket}" method="get">
+        <div class="row">
+
+            <div class="form-outline d-flex justify-content-between gap-3">
+
+                <div class="container">
+                    <div class="form-outline d-flex justify-content-center gap-3">
+                        <div class="row">
+                            <h4 class="text-center">Locations</h4>
+
+                            <label for="location-from">Choose departure location:</label>
+                            <select name="location-from" id="location-from" class="form-control">
+                                <option></option>
+                                <option th:each="location : ${locations}"
+                                        th:value="${location.locationName}"
+                                        th:text="${location.locationName}">
+                                </option>
+                            </select>
+                            <label for="location-to">Choose arrival location:</label>
+                            <select name="location-to" id="location-to" class="form-control">
+                                <option></option>
+                                <option th:each="location : ${locations}"
+                                        th:value="${location.locationName}"
+                                        th:text="${location.locationName}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="form-outline d-flex justify-content-center gap-3">
+                        <div class="row">
+                            <h4 class="text-center">Transport type</h4>
+
+                            <label for="transport-type">Choose transport type:</label>
+                            <select name="transport-type" id="transport-type" class="form-control">
+                                <option></option>
+                                <option th:each="t : ${transporttypes}"
+                                        th:value="${t.transportTypeName}"
+                                        th:text="${t.transportTypeName}">
+                                </option>
+                            </select>
+                            <button type="submit" class="btn btn-primary btn-block mt-4" style="width: 100%">Filter</button>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="form-outline d-flex justify-content-center gap-3">
+                        <div class="row">
+                            <h4 class="text-center">Departure date</h4>
+                            <label for="departure">From:</label>
+                            <input type="date" id="departure" name="departure" class="form-control">
+                            <label for="arrival">To:</label>
+                            <input type="date" id="arrival" name="arrival" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-outline d-flex justify-content-center gap-3">
+<!--                    <button type="submit" class="btn btn-primary btn-block mt-5" style="width: 10%">Filter</button>-->
+                </div>
+            </div>
+        </div>
+    </form>
+
     <br><br>
-    <h4>Departure date</h4>
-    <label for="departure">From:</label>
-    <input type="date" id="departure" name="departure">
-    <label for="arrival">To:</label>
-    <input type="date" id="arrival" name="arrival">
+    <form th:action="@{/sell/ticket}" th:method="post">
+        <table class="table table-bordered">
+            <tr>
+                <th scope="col" class="text-center">locationFrom</th>
+                <th scope="col" class="text-center">locationTo</th>
+                <th scope="col" class="text-center">departure</th>
+                <th scope="col" class="text-center">timeOfDeparture</th>
+                <th scope="col" class="text-center">arrival</th>
+                <th scope="col" class="text-center">timeOfArrival</th>
+                <th scope="col" class="text-center">transportTypeName</th>
+                <th scope="col" class="text-center">tripTypeName</th>
+                <th scope="col" class="text-center">companyName</th>
+                <th scope="col" class="text-center">Tickets left</th>
+                <th scope="col" class="text-center">pick a request</th>
+            </tr>
+            <tr th:each="t : ${allTrips}">
+                <td class="text-center" th:text="${t.locationFrom.locationName}"></td>
+                <td class="text-center" th:text="${t.locationTo.locationName}"></td>
+                <td class="text-center" th:text="${t.departure}"></td>
+                <td class="text-center" th:text="${t.timeOfDeparture}"></td>
+                <td class="text-center" th:text="${t.arrival}"></td>
+                <td class="text-center" th:text="${t.timeOfArrival}"></td>
+                <td class="text-center" th:text="${t.transportTypeId.transportTypeName}"></td>
+                <td class="text-center" th:text="${t.tripTypeId.tripTypeName}"></td>
+                <td class="text-center" th:text="${t.companyId.companyName}"></td>
+                <td class="text-center" th:text="${t.capacity} - ${rep.findAllSoldTicketsByTrip(t)}"></td>
+                <td class="text-center">
+                    <label>
+                        <input type="radio" th:name="selectedTrip" th:value="${t.tripId}"/>
+                    </label>
+                </td>
+            </tr>
+        </table>
 
-    <button type="submit">go</button>
-</form>
-<br><br>
-<form th:action="@{/sell/ticket}" th:method="post">
-    <label for="customer-name">Enter customer name:</label>
-    <input type="text" id="customer-name" name="customer-name" th:name="customerName">
-    <br>
-    <label for="email">Enter email:</label>
-    <input type="text" id="email" name="email" th:name="email"><br><br><br>
+        <div class="form-outline d-flex justify-content-end gap-3">
+            <div class="row">
+<!--                <div class="row">-->
+<!--                    <div class="form-outline d-flex justify-content-end gap-3">-->
+                <div class="row">
+                    <div class="form-outline d-flex justify-content-end gap-3">
+                        <label for="customer-name" class="form-label">Enter customer name:</label>
+                        <input type="text" class="form-control" style="width: 20%" id="customer-name"
+                               name="customer-name" th:name="customerName">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-outline d-flex justify-content-end gap-3 mt-3">
+                        <label for="email" class="form-label">Enter email:</label>
+                        <input type="text" class="form-control" style="width: 20%" id="email" name="email"
+                               th:name="email">
+                    </div>
+                </div>
+<!--                    </div>-->
+<!--                </div>-->
+                <div class="row">
+                    <div class="form-outline d-flex justify-content-end gap-3">
+                        <input type="submit" class="btn btn-primary btn-block mt-3" style="width: 20%" name="sell"
+                               value="Sell ticket">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
 
 
-<!--    there is the filter-->
-
-<!--    there ends the filter-->
-
-    <table>
-        <tr>
-            <th>locationFrom</th>
-            <th>locationTo</th>
-            <th>departure</th>
-            <th>timeOfDeparture</th>
-            <th>arrival</th>
-            <th>timeOfArrival</th>
-            <th>transportTypeName</th>
-            <th>tripTypeName</th>
-            <th>companyName</th>
-            <th>Tickets left</th>
-            <th>pick a request</th>
-        </tr>
-        <tr th:each="t : ${allTrips}">
-            <td th:text="${t.locationFrom.locationName}"></td>
-            <td th:text="${t.locationTo.locationName}"></td>
-            <td th:text="${t.departure}"></td>
-            <td th:text="${t.timeOfDeparture}"></td>
-            <td th:text="${t.arrival}"></td>
-            <td th:text="${t.timeOfArrival}"></td>
-            <td th:text="${t.transportTypeId.transportTypeName}"></td>
-            <td th:text="${t.tripTypeId.tripTypeName}"></td>
-            <td th:text="${t.companyId.companyName}"></td>
-            <td th:text="${t.capacity} - ${rep.findAllSoldTicketsByTrip(t)}"></td>
-            <td>
-                <label>
-                    <!--                    <input type="radio" th:field="*{selectedTrip}" th:value="${t}" />-->
-                    <input type="radio" th:name="selectedTrip" th:value="${t.tripId}"/>
-                </label>
-            </td>
-        </tr>
-    </table>
-    <!--    <input type="hidden" th:field="*{selectedTrip}" />-->
-    <input type="submit" name="sell" value="Sell ticket">
-
-</form>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>

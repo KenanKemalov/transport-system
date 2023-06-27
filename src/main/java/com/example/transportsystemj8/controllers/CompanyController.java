@@ -5,6 +5,7 @@ import com.example.transportsystemj8.data.repository.*;
 import com.example.transportsystemj8.services.DirectionService;
 import com.example.transportsystemj8.services.TripServiceImpl;
 import com.example.transportsystemj8.services.TripTypeServiceImpl;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -70,6 +73,15 @@ public class CompanyController {
         return "company/create-trip";
     }
 
+//    @GetMapping("/create/trip/fail")
+//    public String showCreateTripFailForm(@RequestParam("error") Boolean error, Model model){
+//        model.addAttribute("trip", new Trip());
+//        model.addAttribute("triptypes", tripTypeRepository.findAllTripTypes());
+//        model.addAttribute("transporttypes", transportTypeRepository.findAllTransportTypes());
+//        model.addAttribute("locations", locationRepository.findAllLocations());
+//        return "company/create-trip";
+//    }
+
     @PostMapping("/create/trip")
     public String processCreateTripForm(@ModelAttribute("trip") Trip trip, BindingResult result){
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -80,11 +92,17 @@ public class CompanyController {
             System.out.println(trip.toString());
             return "redirect:/r/";
         }
+        LocalTime departureTime =  LocalTime.parse(trip.getTimeOfDeparture());
+        LocalTime arrivalTime = LocalTime.parse(trip.getTimeOfArrival());
+        System.out.println(trip.getTimeOfDeparture());
+        if(trip.getDeparture().isAfter(trip.getArrival()) || (departureTime.isAfter(arrivalTime) && trip.getDeparture().equals(trip.getArrival()))){
+            return "redirect:/create/trip?error=true";
+        }
 
         System.out.println(trip.toString());
         tripService.saveTrip(trip);
         System.out.println("trip saved");
-        return "redirect:/company/dashboard";
+        return "redirect:/create/trip?success=true";
     }
 
     @GetMapping("/check/requests")
