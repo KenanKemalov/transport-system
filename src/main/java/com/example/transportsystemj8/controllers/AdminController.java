@@ -40,7 +40,9 @@ public class AdminController {
     private DistributorServiceImpl distributorService;
 
     @GetMapping("/admin/dashboard")
-    public String showCompanyDashboard() {
+    public String showCompanyDashboard(Model model) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", user);
         return "admin-dashboard";
     }
 

@@ -3,50 +3,275 @@
       xmlns="http://www.w3.org/1999/html"
       xsi:schemaLocation="http://www.thymeleaf.org " lang="en">
 <head>
+    <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <title>Admin Dashboard</title>
+
+    <style>
+        #header {
+            background-color: #f1f1f1; /* Grey background */
+            background-image: url('/images/background.jpg');
+            background-repeat: no-repeat;
+            background-size: 100%;
+            padding: 50px 10px; /* Some padding */
+            color: black;
+            text-align: center; /* Centered text */
+            font-size: 90px; /* Big font size */
+            font-weight: bold;
+            position: sticky; /* Fixed position - sit on top of the page */
+            top: 0;
+            width: 100%; /* Full width */
+            transition: 0.2s; /* Add a transition effect (when scrolling - and font size is decreased) */
+        }
+    </style>
+
+
 </head>
 <body>
 <div th:replace="~{fragments/navigation :: navigation-admin}"></div>
 
-<div class="row">
-    <div class="col-sm-2">
-        <div class="card" style="width: 19rem;">
-            <img src="https://media.istockphoto.com/id/535913739/vector/vector-map-with-pin-pointer-illustration.jpg?s=612x612&w=0&k=20&c=k70y-GYfXRUiuSdq7ie_BF9Mvry6XlgZV3ENFR-TDJk="
-                 class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Add location</h5>
-                <p class="card-text">Click here to add a new location</p>
-                <a href="/add/location" class="btn btn-primary stretched-link">Add location</a>
+
+<div id="header">Welcome, <span th:text="${user.username}"></span></div>
+
+<div class="page-content">
+    <div id="content">
+        <div class="container">
+            <div class="row py-3">
+                <div class="row">
+                    <div class="title-area text-center mt-5">
+                        <h3>Add data</h3>
+                        <div class="d-flex justify-content-center">
+                            <div class="mb-4"
+                                 style="width: 30%; height: 20px; border-bottom: 1px solid black; text-align: center">
+                                <span style="font-size: 20px; background-color: #ffffff; padding: 0 10px;">
+                                    ✻
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row py-3">
+                    <div class="d-flex justify-content-center gap-2">
+                        <div class="col-md-6 col-lg-3 text-center mt-2" data-aos="fade-up" data-aos-delay="100">
+                            <div class="card">
+                                <div class="card-body bg-light">
+                                    <div class="text-center text-secondary display-3"><i class="bi bi-palette-fill"></i>
+                                    </div>
+                                    <h3 class="h4 mt-2">Add location</h3>
+                                    <p class="text-small">Click here to add a new location</p>
+                                    <a href="/add/location" class="btn btn-success stretched-link">Add location</a>
+                                    <!--                    </div>-->
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 text-center mt-2" data-aos="fade-up" data-aos-delay="100">
+                            <div class="card">
+                                <div class="card-body bg-light">
+                                    <div class="text-center text-secondary display-3"><i class="bi bi-palette-fill"></i>
+                                    </div>
+                                    <h3 class="h4 mt-2">Add trip type</h3>
+                                    <p class="text-small">Click here to add a new trip type</p>
+                                    <a href="/add/triptype" class="btn btn-success stretched-link">Add trip type</a>
+                                    <!--                    </div>-->
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 text-center mt-2" data-aos="fade-up" data-aos-delay="100">
+                            <div class="card">
+                                <div class="card-body bg-light">
+                                    <div class="text-center text-secondary display-3"><i class="bi bi-palette-fill"></i>
+                                    </div>
+                                    <h3 class="h4 mt-2">Add transport type</h3>
+                                    <p class="text-small">Click here to add a new transport type</p>
+                                    <a href="/add/transporttype" class="btn btn-success stretched-link">Add transport
+                                        type</a>
+                                    <!--                    </div>-->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="d-flex justify-content-center gap-2">
+                        <div class="col-md-6 col-lg-3 text-center " data-aos="fade-up" data-aos-delay="100">
+                            <div class="card">
+                                <div class="card-body bg-light">
+                                    <div class="text-center text-secondary display-3"><i class="bi bi-palette-fill"></i>
+                                    </div>
+                                    <h3 class="h4 mt-2">Create company</h3>
+                                    <p class="text-small">Click here to create a new company</p>
+                                    <a href="/register/company" class="btn btn-success stretched-link">Create company</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 text-center " data-aos="fade-up" data-aos-delay="100">
+                            <div class="card">
+                                <div class="card-body bg-light">
+                                    <div class="text-center text-secondary display-3"><i class="bi bi-palette-fill"></i>
+                                    </div>
+                                    <h3 class="h4 mt-2">Create distributor</h3>
+                                    <p class="text-small">Click here to create a new distributor</p>
+                                    <a href="/register/distributor" class="btn btn-success stretched-link">Create distributor</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 text-center" data-aos="fade-up" data-aos-delay="100">
+                            <div class="card">
+                                <div class="card-body bg-light">
+                                    <div class="text-center text-secondary display-3"><i class="bi bi-palette-fill"></i>
+                                    </div>
+                                    <h3 class="h4 mt-2">Create cashier</h3>
+                                    <p class="text-small">Click here to create a new cashier</p>
+                                    <a href="/create/cashier" class="btn btn-success stretched-link">Create cashier</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="title-area text-center mt-5">
+                        <h3>Update data</h3>
+                        <div class="d-flex justify-content-center">
+                            <div class="mb-4"
+                                 style="width: 30%; height: 20px; border-bottom: 1px solid black; text-align: center">
+                                <span style="font-size: 20px; background-color: #ffffff; padding: 0 10px;">
+                                    ✻
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row py-3">
+                    <div class="d-flex justify-content-center gap-2">
+                        <div class="col-md-6 col-lg-3 text-center mt-2" data-aos="fade-up" data-aos-delay="100">
+                            <div class="card">
+                                <div class="card-body bg-light">
+                                    <div class="text-center text-secondary display-3"><i class="bi bi-palette-fill"></i>
+                                    </div>
+                                    <h3 class="h4 mt-2">Update company</h3>
+                                    <p class="text-small">Click here to update a company</p>
+                                    <a href="/update/company" class="btn btn-primary stretched-link">Update company</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 text-center mt-2" data-aos="fade-up" data-aos-delay="100">
+                            <div class="card">
+                                <div class="card-body bg-light">
+                                    <div class="text-center text-secondary display-3"><i class="bi bi-palette-fill"></i>
+                                    </div>
+                                    <h3 class="h4 mt-2">Update distributor</h3>
+                                    <p class="text-small">Click here to update a distributor</p>
+                                    <a href="/update/distributor" class="btn btn-primary stretched-link">Update distributor</a>
+                                    <!--                    </div>-->
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 text-center mt-2" data-aos="fade-up" data-aos-delay="100">
+                            <div class="card">
+                                <div class="card-body bg-light">
+                                    <div class="text-center text-secondary display-3"><i class="bi bi-palette-fill"></i>
+                                    </div>
+                                    <h3 class="h4 mt-2">Update cashier</h3>
+                                    <p class="text-small">Click here to update a cashier</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="title-area text-center mt-5">
+                        <h3>Delete data</h3>
+                        <div class="d-flex justify-content-center">
+                            <div class="mb-4"
+                                 style="width: 30%; height: 20px; border-bottom: 1px solid black; text-align: center">
+                                <span style="font-size: 20px; background-color: #ffffff; padding: 0 10px;">
+                                    ✻
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row py-3">
+                    <div class="d-flex justify-content-center gap-2">
+                        <div class="col-md-6 col-lg-3 text-center mt-2" data-aos="fade-up" data-aos-delay="100">
+                            <div class="card">
+                                <div class="card-body bg-light">
+                                    <div class="text-center text-secondary display-3"><i class="bi bi-palette-fill"></i>
+                                    </div>
+                                    <h3 class="h4 mt-2">Delete location</h3>
+                                    <p class="text-small">Click here to delete a location</p>
+                                    <a href="/delete/location" class="btn btn-danger stretched-link">Delete location</a>
+                                    <!--                    </div>-->
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 text-center mt-2" data-aos="fade-up" data-aos-delay="100">
+                            <div class="card">
+                                <div class="card-body bg-light">
+                                    <div class="text-center text-secondary display-3"><i class="bi bi-palette-fill"></i>
+                                    </div>
+                                    <h3 class="h4 mt-2">Delete trip type</h3>
+                                    <p class="text-small">Click here to delete a trip type</p>
+                                    <a href="/delete/triptype" class="btn btn-danger stretched-link">Delete trip
+                                        type</a>
+                                    <!--                    </div>-->
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 text-center mt-2" data-aos="fade-up" data-aos-delay="100">
+                            <div class="card">
+                                <div class="card-body bg-light">
+                                    <div class="text-center text-secondary display-3"><i class="bi bi-palette-fill"></i>
+                                    </div>
+                                    <h3 class="h4 mt-2">Delete transport type</h3>
+                                    <p class="text-small">Click here to delete transport type</p>
+                                    <a href="/delete/transporttype" class="btn btn-danger stretched-link">Delete
+                                        transport
+                                        type</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="col-sm-2">
-        <div class="card" style="width: 19rem;">
-            <img src="https://media.istockphoto.com/id/535913739/vector/vector-map-with-pin-pointer-illustration.jpg?s=612x612&w=0&k=20&c=k70y-GYfXRUiuSdq7ie_BF9Mvry6XlgZV3ENFR-TDJk="
-                 class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Add trip type</h5>
-                <p class="card-text">Click here to add a new trip type</p>
-                <a href="/add/triptype" class="btn btn-primary stretched-link">Add trip type</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-2">
-        <div class="card" style="width: 19rem;">
-            <img src="https://media.istockphoto.com/id/535913739/vector/vector-map-with-pin-pointer-illustration.jpg?s=612x612&w=0&k=20&c=k70y-GYfXRUiuSdq7ie_BF9Mvry6XlgZV3ENFR-TDJk="
-                 class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Add transport type</h5>
-                <p class="card-text">Click here to add a new transport type</p>
-                <a href="/add/transporttype" class="btn btn-primary stretched-link">Add transport type</a>
-            </div>
+
         </div>
     </div>
 </div>
 
+
 <!-- Add your admin dashboard content here -->
+
+<script>
+    // When the user scrolls down 50px from the top of the document, resize the header's font size
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+            // document.getElementById("body").style.color = "#12e277";
+            document.getElementById("header").style.fontSize = "30px";
+            document.getElementById("header").style.textAlign = "left";
+            // document.getElementById("header").style.color = "black";
+            document.getElementById("header").style.backgroundColor = "transparent";
+            document.getElementById("header").style.backgroundImage = 'url("")';
+
+        } else {
+            document.getElementById("header").style.fontSize = "90px";
+            document.getElementById("header").style.textAlign = "center";
+            // document.getElementById("header").style.color = "aliceblue";
+            document.getElementById("header").style.backgroundColor = "#f1f1f1";
+            document.getElementById("header").style.backgroundImage = "url('/images/background.jpg')";
+        }
+    }
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"

@@ -57,7 +57,9 @@ public class CashierController {
     private LocationRepository locationRepository;
 
     @GetMapping("/cashier/dashboard")
-    public String showCashierDashboard() {
+    public String showCashierDashboard(Model model) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("cashier", cashierRepository.findCashierByCashierId(user.getUserId()));
         return "cashier-dashboard";
     }
 

@@ -1,54 +1,120 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.thymeleaf.org " lang="en"><head>
+      xsi:schemaLocation="http://www.thymeleaf.org " lang="en">
+<head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <meta charset="UTF-8">
     <title>Distributor dashboard</title>
+
+    <style>
+        #header {
+            background-color: #f1f1f1; /* Grey background */
+            background-image: url('/images/background.jpg');
+            background-repeat: no-repeat;
+            background-size: 100%;
+            padding: 50px 40px; /* Some padding */
+            color: black;
+            text-align: center; /* Centered text */
+            font-size: 90px; /* Big font size */
+            font-weight: bold;
+            position: sticky; /* Fixed position - sit on top of the page */
+            top: 0;
+            width: 100%; /* Full width */
+            transition: 0.2s; /* Add a transition effect (when scrolling - and font size is decreased) */
+        }
+    </style>
+
 </head>
 <body>
 <div th:replace="~{fragments/navigation :: navigation-distributor}"></div>
-<p>Welcome, <span th:text="${distributor.distributorName}"></span>!</p>
+<!--<p>Welcome, <span th:text="${distributor.distributorName}"></span>!</p>-->
 
-<section class="vh-50">
-    <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center">
-            <div class="col col-md-9 col-lg-7 col-xl-5">
-                <!--                                <div class="position-absolute top-0 end-0">-->
-                <div class="card" style="border-radius: 15px;">
-                    <div class="card-body p-4">
-                        <div class="d-flex text-black">
-                            <div class="flex-shrink-0">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541"
-                                     alt="Generic placeholder image" class="img-fluid"
-                                     style="width: 180px; border-radius: 10px;">
-                            </div>
-                            <div class="flex-grow-1 ms-3">
-                                <h5 class="mb-1"><span th:text="${distributor.distributorName}"></span></h5>
-                                <p class="mb-2 pb-1" style="color: #2b2a2a;"><span th:text="${role}"></span></p>
-                                <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
-                                     style="background-color: #efefef;">
-                                    <div>
-                                        <p class="small text-muted mb-1">Honorarium</p>
-                                        <p class="mb-0"><span th:text="${distributor.honorarium} + ' BGN'"></span></p>
-                                    </div>
-                                </div>
-                                <div class="d-flex pt-1">
-                                    <button type="button" class="btn btn-primary me-1 flex-grow-1">Update name
-                                    </button>
-                                    <button type="button" class="btn btn-primary flex-grow-1">Update password
-                                    </button>
-                                </div>
+<div id="header">
+    Welcome, <span th:text="${distributor.distributorName}"></span>!
+</div>
+<div id="salary" class="me-5" style="position: sticky; top: 250px; align-content: end" >
+    <div class="d-flex flex-row-reverse">
+            <div class="d-flex text-black">
+                <div class="d-flex justify-content-center rounded-3 p-2 mb-2 mt-4"
+                     style="background-color: #efefef;">
+                    <div>
+                        <p class="big text-muted mb-1">Your honorarium:</p>
+<!--                        <p class="mb-0"><span th:text="${distributor.honorarium} + ' BGN'"></span></p>-->
+                        <p class="mb-0"><span th:text="${#numbers.formatDecimal(distributor.honorarium, 0, 2, 'POINT')} + ' BGN'"></span></p>
+                        </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+<!--<section class="vh-100">-->
+    <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col col-md-9 col-lg-7 col-xl-10">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <h1 class="card-title">Create a new cashier</h1>
+                                <h5 class="card-text">Click here to create a new cashier.</h5>
+                                <a href="/create/cashier" class="btn btn-primary stretched-link">Create a cashier</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!--                                        </div>-->
+            </div>
+            <div class="row d-flex justify-content-center align-items-center mt-5">
+                <div class="col col-md-9 col-lg-7 col-xl-10">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <h1 class="card-title">Requests</h1>
+                                <h5 class="card-text">Click here to create a new ticket request for a trip you choose.</h5>
+                                <a href="/request/tickets" class="btn btn-primary stretched-link">Create a request</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</section>
+<!--</section>-->
+
+<script>
+    // When the user scrolls down 50px from the top of the document, resize the header's font size
+    window.onscroll = function () {
+        scrollFunction()
+    };
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+            // document.getElementById("body").style.color = "#12e277";
+            document.getElementById("header").style.fontSize = "30px";
+            document.getElementById("header").style.textAlign = "left";
+            // document.getElementById("header").style.color = "black";
+            document.getElementById("header").style.backgroundColor = "transparent";
+            document.getElementById("header").style.backgroundImage = 'url("")';
+            // document.getElementById("salary").removeAttribute("hidden");
+            document.getElementById("salary").style.top="35px";
+            // document.getElementById("salary").setAttribute("top", "30px");
+        } else {
+            document.getElementById("header").style.fontSize = "90px";
+            document.getElementById("header").style.textAlign = "center";
+            // document.getElementById("header").style.color = "aliceblue";
+            document.getElementById("header").style.backgroundColor = "#f1f1f1";
+            document.getElementById("header").style.backgroundImage = "url('/images/background.jpg')";
+            // document.getElementById("salary").setAttribute("hidden", false);
+            // document.getElementById("salary").setAttribute("top", "250px");
+            document.getElementById("salary").style.top="250px";
+
+        }
+    }
+</script>
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
 </body>
 </html>

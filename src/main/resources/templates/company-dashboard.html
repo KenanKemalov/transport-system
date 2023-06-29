@@ -6,11 +6,146 @@
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <meta charset="UTF-8">
     <title>Company dashboard</title>
+
+    <style>
+        #header {
+            background-color: #f1f1f1; /* Grey background */
+            background-image: url('/images/background.jpg');
+            background-repeat: no-repeat;
+            background-size: 100%;
+            padding: 50px 40px; /* Some padding */
+            color: black;
+            text-align: center; /* Centered text */
+            font-size: 90px; /* Big font size */
+            font-weight: bold;
+            position: sticky; /* Fixed position - sit on top of the page */
+            top: 0;
+            width: 100%; /* Full width */
+            transition: 0.2s; /* Add a transition effect (when scrolling - and font size is decreased) */
+        }
+    </style>
+
 </head>
 <body>
 <div th:replace="~{fragments/navigation :: navigation-company}"></div>
-<p>Welcome, <span th:text="${company.companyName}"></span>!</p>
+
+<div id="header">
+    Welcome, <span th:text="${company.companyName}"></span>!
+</div>
+
+<div id="salary" class="me-5" style="position: sticky; top: 250px; align-content: end">
+    <div class="d-flex flex-row-reverse">
+        <div class="d-flex text-black">
+            <div class="d-flex justify-content-center rounded-3 p-2 mb-2 mt-4"
+                 style="background-color: #efefef;">
+                <div>
+                    <p class="small text-muted mb-1">Honorarium</p>
+                    <p class="mb-0"><span
+                            th:text="${#numbers.formatDecimal(company.honorarium, 0, 2, 'POINT')} + ' BGN'"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="vh-100">
+    <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col col-md-9 col-lg-7 col-xl-10">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <h1 class="card-title">Create a new trip</h1>
+                                <h5 class="card-text">Click here to create a new trip.</h5>
+                                <a href="/create/trip" class="btn btn-primary stretched-link">Create a trip</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center align-items-center mt-5">
+                <div class="col col-md-9 col-lg-7 col-xl-10">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <h1 class="card-title">Requests</h1>
+                                <h5 class="card-text">Click here to check whether there are new ticket requests for your
+                                    trips.</h5>
+                                <a href="/check/requests" class="btn btn-primary stretched-link">Check requests</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center align-items-center mt-5">
+                <div class="col col-md-9 col-lg-7 col-xl-10">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <h1 class="card-title">Sold tickets</h1>
+                                <h5 class="card-text">Click here to see how many tickets are sold for each one of your
+                                    trips.</h5>
+                                <a href="/check/sold/tickets" class="btn btn-primary stretched-link">Check sold
+                                    tickets</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center align-items-center mt-5">
+                <div class="col col-md-9 col-lg-7 col-xl-10">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <h1 class="card-title">Best selling directions</h1>
+                                <h5 class="card-text">Click here to check which direction your customers are using the
+                                    most.</h5>
+                                <a href="/sold/tickets/direction" class="btn btn-primary stretched-link">Check bestselling directions</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    // When the user scrolls down 50px from the top of the document, resize the header's font size
+    window.onscroll = function () {
+        scrollFunction()
+    };
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+            // document.getElementById("body").style.color = "#12e277";
+            document.getElementById("header").style.fontSize = "30px";
+            document.getElementById("header").style.textAlign = "left";
+            // document.getElementById("header").style.color = "black";
+            document.getElementById("header").style.backgroundColor = "transparent";
+            document.getElementById("header").style.backgroundImage = 'url("")';
+            // document.getElementById("salary").removeAttribute("hidden");
+            document.getElementById("salary").style.top = "35px";
+            // document.getElementById("salary").setAttribute("top", "30px");
+        } else {
+            document.getElementById("header").style.fontSize = "90px";
+            document.getElementById("header").style.textAlign = "center";
+            // document.getElementById("header").style.color = "aliceblue";
+            document.getElementById("header").style.backgroundColor = "#f1f1f1";
+            document.getElementById("header").style.backgroundImage = "url('/images/background.jpg')";
+            // document.getElementById("salary").setAttribute("hidden", false);
+            // document.getElementById("salary").setAttribute("top", "250px");
+            document.getElementById("salary").style.top = "250px";
+
+        }
+    }
+</script>
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
 </body>
 </html>

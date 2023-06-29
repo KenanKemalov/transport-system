@@ -55,14 +55,8 @@
             </li>
         </ul>
     </div>
-    <!--    <form role="form" th:action="@{/logout}" th:method="post">-->
-    <!--        <input type="submit" class="logout ml-auto p-2" th:text="logout"/>-->
-    <!--    </form>-->
     <div sec:authorize="isAuthenticated()">
         <ul class="navbar-nav mr-auto">
-            <!--            <li class="nav-item" th:class="${#httpServletRequest.requestURI.contains('home')} ? 'nav-link active' : 'nav-link'">-->
-
-
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown0" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Account
@@ -87,11 +81,9 @@
 
     <div class="collapse navbar-collapse" id="navbarsExample04">
         <ul class="navbar-nav mr-auto">
-            <!--            <li class="nav-item" th:class="${#httpServletRequest.requestURI.contains('home')} ? 'nav-link active' : 'nav-link'">-->
             <li class="nav-item" th:class="nav-item">
                 <a class="nav-link" th:href="@{/create/trip}">Create a trip<span class="sr-only"></span></a>
             </li>
-            <!--            <li class="nav-item" th:class="${#httpServletRequest.requestURI.contains('contact')} ? 'nav-link active' : 'nav-link'">-->
             <li class="nav-item" th:class="nav-item">
                 <a class="nav-link" th:href="@{/check/requests}">Check requests<span class="sr-only"></span></a>
             </li>
@@ -103,12 +95,8 @@
             </li>
         </ul>
     </div>
-    <!--    <form role="form" th:action="@{/logout}" th:method="post">-->
-    <!--        <input type="submit" class="logout ml-auto p-2" th:text="logout"/>-->
-    <!--    </form>-->
     <div sec:authorize="isAuthenticated()">
         <ul class="navbar-nav mr-auto">
-            <!--            <li class="nav-item" th:class="${#httpServletRequest.requestURI.contains('home')} ? 'nav-link active' : 'nav-link'">-->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Account
@@ -134,22 +122,16 @@
 
     <div class="collapse navbar-collapse" id="navbarsExample05">
         <ul class="navbar-nav mr-auto">
-            <!--            <li class="nav-item" th:class="${#httpServletRequest.requestURI.contains('home')} ? 'nav-link active' : 'nav-link'">-->
             <li class="nav-item" th:class="nav-item">
                 <a class="nav-link" th:href="@{/create/cashier}">Create a cashier<span class="sr-only"></span></a>
             </li>
-            <!--            <li class="nav-item" th:class="${#httpServletRequest.requestURI.contains('contact')} ? 'nav-link active' : 'nav-link'">-->
             <li class="nav-item" th:class="nav-item">
                 <a class="nav-link" th:href="@{/request/tickets}">request tickets<span class="sr-only"></span></a>
             </li>
         </ul>
     </div>
-    <!--    <form role="form" th:action="@{/logout}" th:method="post">-->
-    <!--        <input type="submit" class="logout ml-auto p-2" th:text="logout"/>-->
-    <!--    </form>-->
     <div sec:authorize="isAuthenticated()">
         <ul class="navbar-nav mr-auto">
-            <!--            <li class="nav-item" th:class="${#httpServletRequest.requestURI.contains('home')} ? 'nav-link active' : 'nav-link'">-->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Account
@@ -175,18 +157,13 @@
 
     <div class="collapse navbar-collapse" id="navbarsExample06">
         <ul class="navbar-nav mr-auto">
-            <!--            <li class="nav-item" th:class="${#httpServletRequest.requestURI.contains('home')} ? 'nav-link active' : 'nav-link'">-->
             <li class="nav-item" th:class="nav-item">
                 <a class="nav-link" th:href="@{/sell/ticket}">Sell a ticket<span class="sr-only"></span></a>
             </li>
         </ul>
     </div>
-    <!--    <form role="form" th:action="@{/logout}" th:method="post">-->
-    <!--        <input type="submit" class="logout ml-auto p-2" th:text="logout"/>-->
-    <!--    </form>-->
     <div sec:authorize="isAuthenticated()">
         <ul class="navbar-nav mr-auto">
-            <!--            <li class="nav-item" th:class="${#httpServletRequest.requestURI.contains('home')} ? 'nav-link active' : 'nav-link'">-->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Account
