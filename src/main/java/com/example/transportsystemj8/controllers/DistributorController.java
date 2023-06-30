@@ -5,6 +5,7 @@ import com.example.transportsystemj8.data.repository.DistributorRepository;
 import com.example.transportsystemj8.data.repository.RequestRepository;
 import com.example.transportsystemj8.data.repository.TripRepository;
 import com.example.transportsystemj8.services.CashierServiceImpl;
+import com.example.transportsystemj8.services.TripServiceImpl;
 import com.example.transportsystemj8.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.example.transportsystemj8.data.entity.UserRole.CASHIER;
 
 @Controller
@@ -21,6 +24,9 @@ public class DistributorController {
 
     @Autowired
     private TripRepository tripRepository;
+
+    @Autowired
+    private TripServiceImpl tripService;
 
     @Autowired
     private RequestRepository requestRepository;
@@ -77,8 +83,11 @@ public class DistributorController {
 
     @GetMapping("/request/tickets")
     public String showRequestTicketsForm(Model model){
+        List<Trip> allTrips = tripService.findAll();
+        allTrips = tripService.clearOldTrips(allTrips);
         model.addAttribute("request", new Request());
-        model.addAttribute("trips", tripRepository.findAll());
+//        model.addAttribute("trips", tripRepository.findAll());
+        model.addAttribute("trips", allTrips);
         return "distributor/request-tickets";
     }
 

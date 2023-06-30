@@ -12,6 +12,17 @@
 
 <div class="container">
 
+    <div th:if="${param.error}">
+        <div class="alert alert-danger text-center mt-2">
+            Error when selling ticket - there are no tickets for this trip.
+        </div>
+    </div>
+    <div th:if="${param.success}">
+        <div class="alert alert-success text-center mt-2">
+            Ticket successfully sold.
+        </div>
+    </div>
+
     <form th:action="@{/sell/ticket}" method="get">
         <div class="row">
 
@@ -80,6 +91,8 @@
     </form>
 
     <br><br>
+    <h3 class="text-center mt-3">All trips</h3>
+
     <form th:action="@{/sell/ticket}" th:method="post">
         <table class="table table-bordered">
             <tr>
@@ -92,6 +105,7 @@
                 <th scope="col" class="text-center">transportTypeName</th>
                 <th scope="col" class="text-center">tripTypeName</th>
                 <th scope="col" class="text-center">companyName</th>
+                <th scope="col" class="text-center">Ticket price</th>
                 <th scope="col" class="text-center">Tickets left</th>
                 <th scope="col" class="text-center">pick a request</th>
             </tr>
@@ -105,7 +119,8 @@
                 <td class="text-center" th:text="${t.transportTypeId.transportTypeName}"></td>
                 <td class="text-center" th:text="${t.tripTypeId.tripTypeName}"></td>
                 <td class="text-center" th:text="${t.companyId.companyName}"></td>
-                <td class="text-center" th:text="${t.capacity} - ${rep.findAllSoldTicketsByTrip(t)}"></td>
+                <td class="text-center" th:text="${t.price}"></td>
+                <td class="text-center" th:text="${rep.findAllCountByTripId(t)} - ${rep.findAllSoldTicketsByTrip(t)}"></td>
                 <td class="text-center">
                     <label>
                         <input type="radio" th:name="selectedTrip" th:value="${t.tripId}"/>

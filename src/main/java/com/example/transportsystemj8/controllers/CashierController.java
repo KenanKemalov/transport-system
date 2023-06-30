@@ -107,8 +107,11 @@ public class CashierController {
         Trip trip = tripRepository.findTripByTripId(tripId);
         System.out.println(trip.toString());
         List<Ticket> allTickets = ticketRepository.findAllByTripId(trip);
+        System.out.println(allTickets.size());
         for (Ticket ticket : allTickets){
+            System.out.println(ticket.getCustomerName());
             if(ticket.getCustomerName().equals("-NOT SOLD-")){
+                System.out.println("im here bro");
 //            if(ticket.getTripId().equals(selectedTrip) && ticket.getCustomerName().equals("-NOT SOLD-")){//??
                 ticket.setCustomerName(customerName);
                 ticket.setCashierId(cashierRepository.findCashierByCashierId(user.getUserId()));
@@ -121,10 +124,10 @@ public class CashierController {
                 //end here
                 System.out.println(ticket);
                 System.out.println("ticket sold");
-                return new RedirectView("/sell/ticket");
+                return new RedirectView("/sell/ticket?success=true");
             }
         }
         System.out.println("ticket not sold (all tickets are sold)");
-        return new RedirectView("/cashier/dashboard");
+        return new RedirectView("/sell/ticket?error=true");
     }
 }

@@ -55,6 +55,17 @@ public class Trip implements Serializable {
     @Column(name = "timeOfArrival", nullable = false)
     private String timeOfArrival;
 
+    @Column(name = "price", nullable = false)
+    private Double price;
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
     @OneToMany(mappedBy = "tripId")
     Set<Request> requestSet1;
 
@@ -188,6 +199,21 @@ public class Trip implements Serializable {
     }
     public Trip(int Capacity){
 
+    }
+
+    public Trip(Integer tripId, LocalDate departure, LocalDate arrival, int capacity, TripType tripTypeId, TransportType transportTypeId, Company companyId, Location locationFrom, Location locationTo, String timeOfDeparture, String timeOfArrival, Double price) {
+        this.tripId = tripId;
+        this.departure = departure;
+        this.arrival = arrival;
+        this.capacity = capacity;
+        this.tripTypeId = tripTypeId;
+        this.transportTypeId = transportTypeId;
+        this.companyId = companyId;
+        this.locationFrom = locationFrom;
+        this.locationTo = locationTo;
+        this.timeOfDeparture = timeOfDeparture;
+        this.timeOfArrival = timeOfArrival;
+        this.price = price;
     }
 
     public Trip(LocalDate departure, LocalDate arrival, int capacity, TripType tripTypeId, TransportType transportTypeId, Company companyId, Location locationFrom, Location locationTo, String timeOfDeparture, String timeOfArrival) {
