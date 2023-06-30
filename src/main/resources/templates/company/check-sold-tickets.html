@@ -11,7 +11,8 @@
 <div th:replace="~{fragments/navigation :: navigation-company}"></div>
 <div class="container">
     <h2 class="text-center mt-5">Sold tickets by trip</h2>
-    <table class="table table-bordered">
+    <table id="example" class="table table-bordered">
+        <thead>
         <tr>
             <th scope="col" class="text-center">locationFrom</th>
             <th scope="col" class="text-center">locationTo</th>
@@ -26,6 +27,8 @@
             <th scope="col" class="text-center">Tickets sold count</th>
             <th scope="col" class="text-center">Remaining tickets</th>
         </tr>
+        </thead>
+        <tbody>
         <tr th:each="t : ${allTrips}">
             <td class="text-center" th:text="${t.locationFrom.locationName}"></td>
             <td class="text-center" th:text="${t.locationTo.locationName}"></td>
@@ -40,12 +43,18 @@
             <td class="text-center" th:text="${rep.findAllSoldTicketsByTrip(t)}"></td>
             <td class="text-center" th:text="${rep.findAllCountByTripId(t)} - ${rep.findAllSoldTicketsByTrip(t)}"></td>
         </tr>
+        </tbody>
     </table>
 </div>
 
 
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
+<script src="/js/script.js"></script>
+
 </body>
 </html>

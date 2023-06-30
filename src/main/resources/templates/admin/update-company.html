@@ -24,13 +24,16 @@
         <div class="form-group d-flex justify-content-center">
             <button type="submit" class="btn btn-primary btn-block mb-4" style="width: 30%">Update</button>
         </div>
-        <table class="table table-bordered">
+        <table id="example" class="table table-bordered">
+            <thead>
             <tr>
                 <th scope="col" class="text-center">Name</th>
                 <th scope="col" class="text-center">Honorarium</th>
                 <th scope="col" class="text-center">Username</th>
                 <th scope="col" class="text-center">Pick company</th>
             </tr>
+            </thead>
+            <tbody>
             <tr th:each="c : ${companies}">
                 <td th:text="${c.companyName}" class="text-center"></td>
                 <td th:text="${c.honorarium}" class="text-center"></td>
@@ -42,12 +45,18 @@
                     </label>
                 </td>
             </tr>
+            </tbody>
         </table>
     </form>
 </div>
 <!--</section>-->
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
+<script src="/js/script.js"></script>
+
 </body>
 </html>
