@@ -163,7 +163,6 @@ public class CompanyController {
         return "company/check-sold-tickets";
     }
 
-//    tuka ima da se opravq dosta i nemam ideq zasq
     @GetMapping("/sold/tickets/direction")
     public String checkSoldTicketsByDirection(Model model,
                                               @RequestParam(value = "location-from", required = false) String locationFrom,

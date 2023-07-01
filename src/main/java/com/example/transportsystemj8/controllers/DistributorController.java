@@ -62,7 +62,9 @@ public class DistributorController {
         if (result.hasErrors()) {
             return "distributor/create-cashier";
         }
-        if (!userService.checkIfUserExists(cashier.getUser()) && userService.validateUser(cashier.getUser().getPassword())){
+        if (!userService.checkIfUserExists(cashier.getUser())
+                && userService.validateUser(cashier.getUser().getPassword())
+                && cashierService.validateName(cashier.getCashierName())){
 //        if (!usernameEntry.isPresent()){
             User user = new User();
             user.setUsername(cashier.getUser().getUsername());
@@ -74,10 +76,14 @@ public class DistributorController {
             cashierService.saveCashier(cashier);
             userService.saveUser(user);
             System.out.println("cashier saved");
-            return "redirect:/distributor/dashboard";
+            return "redirect:/create/cashier?success=true";
+        } else if(userService.checkIfUserExists(cashier.getUser())) {
+            return "redirect:/create/cashier?exists=true";
+        } else if (!cashierService.validateName(cashier.getCashierName())){
+            return "redirect:/create/cashier?name=true";
         }
         System.out.println("cashier not saved");
-        return "redirect:/r/";
+        return "redirect:/create/cashier?error=true";
     }
 
 

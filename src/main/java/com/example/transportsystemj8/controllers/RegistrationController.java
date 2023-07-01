@@ -65,10 +65,12 @@ public class RegistrationController {
             companyService.saveCompany(company);
             userService.saveUser(user);
             System.out.println("company saved");
-            return "redirect:/register/company";
+            return "redirect:/register/company?success=true";
+        } else if(userService.checkIfUserExists(company.getUser())) {
+            return "redirect:/register/company?exists=true";
         }
         System.out.println("company not saved");
-        return "redirect:/r/";
+        return "redirect:/register/company?error=true";
     }
 
     //Code down below not finished
@@ -97,8 +99,10 @@ public class RegistrationController {
             System.out.println(distributor.toString());
             distributorService.saveDistributor(distributor);
             userService.saveUser(user);
-            return "redirect:/register/distributor";
+            return "redirect:/register/distributor?success=true";
+        } else if(userService.checkIfUserExists(distributor.getUser())) {
+            return "redirect:/register/distributor?exists=true";
         }
-        return "redirect:/r/";
+        return "redirect:/register/distributor?error=true";
     }
 }

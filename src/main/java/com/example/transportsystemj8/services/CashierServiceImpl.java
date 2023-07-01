@@ -7,9 +7,12 @@ import com.example.transportsystemj8.data.repository.CompanyRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class CashierServiceImpl implements CashierService{
+    private Pattern namePattern = Pattern.compile("^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$");
 
     private CashierRepository cashierRepository;
 
@@ -27,5 +30,10 @@ public class CashierServiceImpl implements CashierService{
 
     public Cashier findCashierById(Integer cashierId){
         return cashierRepository.findCashierByCashierId(cashierId);
+    }
+
+    public boolean validateName(String name){
+        Matcher matcher = namePattern.matcher(name);
+        return matcher.matches();
     }
 }

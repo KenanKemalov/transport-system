@@ -21,6 +21,21 @@
                         <div class="card-body p-5">
                             <h2 class="text-uppercase text-center mb-5">Create new distributor</h2>
                             <form th:action="@{/register/distributor}" th:method="post" th:object="${distributor}">
+                                <div th:if="${param.exists}">
+                                    <div class="alert alert-danger text-center">
+                                        User with this username already exists.
+                                    </div>
+                                </div>
+                                <div th:if="${param.error}">
+                                    <div class="alert alert-danger text-center">
+                                        Password should contain at least 8 characters and at least 1 digit.
+                                    </div>
+                                </div>
+                                <div th:if="${param.success}">
+                                    <div class="alert alert-success text-center">
+                                        Distributor created successfully.
+                                    </div>
+                                </div>
                                 <div class="form-outline mb-4">
                                     <label for="name">Distributor Name:</label>
                                     <input type="text" id="name" name="name" th:field="*{distributorName}"
