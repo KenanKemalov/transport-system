@@ -3,6 +3,7 @@ package com.example.transportsystemj8.controllers;
 import com.example.transportsystemj8.data.entity.*;
 import com.example.transportsystemj8.data.repository.DistributorRepository;
 import com.example.transportsystemj8.data.repository.RequestRepository;
+import com.example.transportsystemj8.data.repository.TicketRepository;
 import com.example.transportsystemj8.data.repository.TripRepository;
 import com.example.transportsystemj8.services.CashierServiceImpl;
 import com.example.transportsystemj8.services.TripServiceImpl;
@@ -38,6 +39,9 @@ public class DistributorController {
 
     @Autowired
     private CashierServiceImpl cashierService;
+
+    @Autowired
+    private TicketRepository ticketRepository;
 
     @GetMapping("/distributor/dashboard")
     public String showCompanyDashboard(Model model) {
@@ -92,6 +96,7 @@ public class DistributorController {
         List<Trip> allTrips = tripService.findAll();
         allTrips = tripService.clearOldTrips(allTrips);
         model.addAttribute("request", new Request());
+        model.addAttribute("rep", ticketRepository);
 //        model.addAttribute("trips", tripRepository.findAll());
         model.addAttribute("trips", allTrips);
         return "distributor/request-tickets";

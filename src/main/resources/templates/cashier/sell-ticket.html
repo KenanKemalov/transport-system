@@ -17,6 +17,11 @@
             Error when selling ticket - there are no tickets for this trip.
         </div>
     </div>
+    <div th:if="${param.name}">
+        <div class="alert alert-danger text-center mt-2">
+            Customer name contains invalid characters.
+        </div>
+    </div>
     <div th:if="${param.success}">
         <div class="alert alert-success text-center mt-2">
             Ticket successfully sold.
@@ -97,18 +102,18 @@
         <table id="example" class="table table-bordered">
             <thead>
             <tr>
-                <th scope="col" class="text-center">locationFrom</th>
-                <th scope="col" class="text-center">locationTo</th>
-                <th scope="col" class="text-center">departure</th>
-                <th scope="col" class="text-center">timeOfDeparture</th>
-                <th scope="col" class="text-center">arrival</th>
-                <th scope="col" class="text-center">timeOfArrival</th>
-                <th scope="col" class="text-center">transportTypeName</th>
-                <th scope="col" class="text-center">tripTypeName</th>
-                <th scope="col" class="text-center">companyName</th>
+                <th scope="col" class="text-center">Departure location</th>
+                <th scope="col" class="text-center">Arrival location</th>
+                <th scope="col" class="text-center">Departure date</th>
+                <th scope="col" class="text-center">Departure hour</th>
+                <th scope="col" class="text-center">Arrival date</th>
+                <th scope="col" class="text-center">Arrival hour</th>
+                <th scope="col" class="text-center">Transport type</th>
+                <th scope="col" class="text-center">Trip type</th>
+                <th scope="col" class="text-center">Company organizer</th>
                 <th scope="col" class="text-center">Ticket price</th>
                 <th scope="col" class="text-center">Tickets left</th>
-                <th scope="col" class="text-center">pick a request</th>
+                <th scope="col" class="text-center">Choose trip</th>
             </tr>
             </thead>
             <tbody>
@@ -126,7 +131,7 @@
                 <td class="text-center" th:text="${rep.findAllCountByTripId(t)} - ${rep.findAllSoldTicketsByTrip(t)}"></td>
                 <td class="text-center">
                     <label>
-                        <input type="radio" th:name="selectedTrip" th:value="${t.tripId}"/>
+                        <input type="radio" th:name="selectedTrip" th:value="${t.tripId}" required/>
                     </label>
                 </td>
             </tr>

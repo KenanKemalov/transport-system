@@ -21,12 +21,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable() //dali?
+        http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/admin/**", "/add/location", "/add/triptype", "/add/transporttype", "/register/**",
                         "/delete/**", "/update/cashier", "/update/distributor", "/update/company").hasAuthority("ADMIN")
-                //.and().formLogin().loginPage("/login").defaultSuccessUrl("/admin/dashboard").and().logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout").
                 .antMatchers("/company/**", "/create/trip", "/check/requests", "/check/sold/tickets").hasAuthority("COMPANY")
                 .antMatchers("/request/tickets","/distributor/**").hasAuthority("DISTRIBUTOR")
                 .antMatchers("/cashier/**, /sell/ticket").hasAuthority("CASHIER")
@@ -37,12 +36,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .defaultSuccessUrl("/default")
                 .failureUrl("/login?error=true")
-//                .and()
-//                .logout()
-//                .logoutUrl("/logout")
-//                .invalidateHttpSession(true)
-//                .logoutSuccessUrl("/login")
-                //.logoutSuccessUrl("/login?logout")
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage("/access-denied");

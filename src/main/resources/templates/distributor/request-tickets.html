@@ -27,32 +27,61 @@
     <table id="example" class="table table-bordered">
         <thead>
         <tr>
-            <th scope="col" class="text-center">locationFrom</th>
-            <th scope="col" class="text-center">locationTo</th>
-            <th scope="col" class="text-center">departure</th>
-            <th scope="col" class="text-center">timeOfDeparture</th>
-            <th scope="col" class="text-center">arrival</th>
-            <th scope="col" class="text-center">timeOfArrival</th>
-            <th scope="col" class="text-center">transportTypeName</th>
-            <th scope="col" class="text-center">tripTypeName</th>
-            <th scope="col" class="text-center">companyName</th>
-            <th scope="col" class="text-center">pick a request</th>
+            <th scope="col" class="text-center">Departure location</th>
+            <th scope="col" class="text-center">Arrival location</th>
+            <th scope="col" class="text-center">Departure date</th>
+            <th scope="col" class="text-center">Departure time</th>
+            <th scope="col" class="text-center">Arrival date</th>
+            <th scope="col" class="text-center">Arrival time</th>
+            <th scope="col" class="text-center">Transport type</th>
+            <th scope="col" class="text-center">Trip type</th>
+            <th scope="col" class="text-center">Capacity</th>
+            <th scope="col" class="text-center">Count of tickets</th>
+            <th scope="col" class="text-center">Tickets sold count</th>
+            <th scope="col" class="text-center">Remaining tickets</th>
+            <th scope="col" class="text-center">Choose trip</th>
         </tr>
+<!--        <tr>-->
+<!--            <th scope="col" class="text-center">locationFrom</th>-->
+<!--            <th scope="col" class="text-center">locationTo</th>-->
+<!--            <th scope="col" class="text-center">departure</th>-->
+<!--            <th scope="col" class="text-center">timeOfDeparture</th>-->
+<!--            <th scope="col" class="text-center">arrival</th>-->
+<!--            <th scope="col" class="text-center">timeOfArrival</th>-->
+<!--            <th scope="col" class="text-center">transportTypeName</th>-->
+<!--            <th scope="col" class="text-center">tripTypeName</th>-->
+<!--            <th scope="col" class="text-center">companyName</th>-->
+<!--            <th scope="col" class="text-center">pick a request</th>-->
+<!--        </tr>-->
         </thead>
         <tbody>
-        <tr th:each="trip : ${trips}">
-            <td class="text-center" th:text="${trip.locationFrom.locationName}"></td>
-            <td class="text-center" th:text="${trip.locationTo.locationName}"></td>
-            <td class="text-center" th:text="${trip.departure}"></td>
-            <td class="text-center" th:text="${trip.timeOfDeparture}"></td>
-            <td class="text-center" th:text="${trip.arrival}"></td>
-            <td class="text-center" th:text="${trip.timeOfArrival}"></td>
-            <td class="text-center" th:text="${trip.transportTypeId.transportTypeName}"></td>
-            <td class="text-center" th:text="${trip.tripTypeId.tripTypeName}"></td>
-            <td class="text-center" th:text="${trip.companyId.companyName}"></td>
+<!--        <tr th:each="trip : ${trips}">-->
+<!--            <td class="text-center" th:text="${trip.locationFrom.locationName}"></td>-->
+<!--            <td class="text-center" th:text="${trip.locationTo.locationName}"></td>-->
+<!--            <td class="text-center" th:text="${trip.departure}"></td>-->
+<!--            <td class="text-center" th:text="${trip.timeOfDeparture}"></td>-->
+<!--            <td class="text-center" th:text="${trip.arrival}"></td>-->
+<!--            <td class="text-center" th:text="${trip.timeOfArrival}"></td>-->
+<!--            <td class="text-center" th:text="${trip.transportTypeId.transportTypeName}"></td>-->
+<!--            <td class="text-center" th:text="${trip.tripTypeId.tripTypeName}"></td>-->
+<!--            <td class="text-center" th:text="${trip.companyId.companyName}"></td>-->
+        <tr th:each="t : ${trips}">
+            <td class="text-center" th:text="${t.locationFrom.locationName}"></td>
+            <td class="text-center" th:text="${t.locationTo.locationName}"></td>
+            <td class="text-center" th:text="${t.departure}"></td>
+            <td class="text-center" th:text="${t.timeOfDeparture}"></td>
+            <td class="text-center" th:text="${t.arrival}"></td>
+            <td class="text-center" th:text="${t.timeOfArrival}"></td>
+            <td class="text-center" th:text="${t.transportTypeId.transportTypeName}"></td>
+            <td class="text-center" th:text="${t.tripTypeId.tripTypeName}"></td>
+            <td class="text-center" th:text="${t.capacity}"></td>
+            <td class="text-center" th:text="${rep.findAllCountByTripId(t)}"></td>
+            <td class="text-center" th:text="${rep.findAllSoldTicketsByTrip(t)}"></td>
+            <td class="text-center" th:text="${rep.findAllCountByTripId(t)} - ${rep.findAllSoldTicketsByTrip(t)}"></td>
+<!--        </tr>-->
             <td class="text-center">
                 <label>
-                    <input type="radio" th:name="selectedTrip" th:value="${trip.tripId}" required/>
+                    <input type="radio" th:name="selectedTrip" th:value="${t.tripId}" required/>
                 </label>
             </td>
         </tr>

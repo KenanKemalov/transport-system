@@ -103,7 +103,9 @@ public class CashierController {
         System.out.println(customerName);
 //        System.out.println(selectedTrip);//??
 
-
+        if (!cashierService.validateName(customerName)){
+            return new RedirectView("/sell/ticket?name=true");
+        }
         Trip trip = tripRepository.findTripByTripId(tripId);
         System.out.println(trip.toString());
         List<Ticket> allTickets = ticketRepository.findAllByTripId(trip);

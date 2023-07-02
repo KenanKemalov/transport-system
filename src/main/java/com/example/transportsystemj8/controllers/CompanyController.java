@@ -95,7 +95,7 @@ public class CompanyController {
         LocalTime departureTime =  LocalTime.parse(trip.getTimeOfDeparture());
         LocalTime arrivalTime = LocalTime.parse(trip.getTimeOfArrival());
         System.out.println(trip.getTimeOfDeparture());
-        if(trip.getDeparture().isAfter(trip.getArrival()) || (departureTime.isAfter(arrivalTime) && trip.getDeparture().equals(trip.getArrival()))){
+        if(trip.getDeparture().isAfter(trip.getArrival()) || (departureTime.isAfter(arrivalTime) && trip.getDeparture().isEqual(trip.getArrival()))){
             return "redirect:/create/trip?error=true";
         }
 
