@@ -13,7 +13,7 @@ $(document).ready(function () {
     });
     $('#example10').DataTable({
         "paging": true,
-        "lengthChange": false,
+        "lengthChange": true,
         "searching": false,
         "ordering": true,
         "info": true,

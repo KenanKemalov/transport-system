@@ -20,6 +20,16 @@
                         <div class="card-body p-5">
                             <h2 class="text-uppercase text-center mb-5">Add location</h2>
                             <form th:action="@{/add/location}" th:method="post" th:object="${location}">
+                                <div th:if="${param.error}">
+                                    <div class="alert alert-danger text-center mt-2">
+                                        The location you are trying to add already exists.
+                                    </div>
+                                </div>
+                                <div th:if="${param.success}">
+                                    <div class="alert alert-success text-center mt-2">
+                                        Location added successfully.
+                                    </div>
+                                </div>
                                 <div class="form-outline mb-4">
                                     <label for="location">Location:</label>
                                     <input type="text" id="location" name="location"

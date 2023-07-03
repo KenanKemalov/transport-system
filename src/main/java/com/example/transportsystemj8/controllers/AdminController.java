@@ -84,9 +84,9 @@ public class AdminController {
 
         if(!locationService.checkIfLocationExists(location)){
             locationService.saveLocation(location);
-            return "redirect:/add/location";
+            return "redirect:/add/location?success=true";
         }
-        return "redirect:/add/location";
+        return "redirect:/add/location?error=true";
     }
 
     @GetMapping("/add/triptype")
@@ -103,9 +103,9 @@ public class AdminController {
 
         if(!tripTypeService.checkIfTripTypeExists(tripType)){
             tripTypeService.saveTripType(tripType);
-            return "redirect:/add/triptype";
+            return "redirect:/add/triptype?success=true";
         }
-        return "redirect:/add/triptype";
+        return "redirect:/add/triptype?error=true";
     }
 
     @GetMapping("/add/transporttype")
@@ -122,9 +122,9 @@ public class AdminController {
 
         if(!transportTypeService.checkIfTransportTypeExists(transportType)){
             transportTypeService.saveTransportType(transportType);
-            return "redirect:/add/transporttype";
+            return "redirect:/add/transporttype?success=true";
         }
-        return "redirect:/add/transporttype";
+        return "redirect:/add/transporttype?error=true";
     }
 
     @GetMapping("/delete/location")

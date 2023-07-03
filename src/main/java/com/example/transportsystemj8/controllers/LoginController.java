@@ -28,16 +28,11 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-    public String showLogin(//@RequestParam(name = "confirmation", required = false) Boolean confirmation,
-                            Model model) {
-//        if(confirmation != null){
-//            model.addAttribute("confirmation", confirmation);
-//        }
+    public String showLogin(Model model) {
         model.addAttribute("user", new User());
         return "login";  // This will map to the common login page
     }
 
-    //@RequestMapping(value= {"/default"}, method = RequestMethod.GET)
     @GetMapping("/default")
     public String defaultAfterLogin() {
         Collection<? extends GrantedAuthority> authorities;
