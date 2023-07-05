@@ -23,7 +23,16 @@
                             <h2 class="text-uppercase text-center mb-5">Delete trip type</h2>
                             <form th:action="@{/delete/transporttype}" th:method="post">
                                 <div class="form-outline mb-4">
-
+                                    <div th:if="${param.success}">
+                                        <div class="alert alert-success text-center mt-2">
+                                            Transport type deleted successfully.
+                                        </div>
+                                    </div>
+                                    <div th:if="${param.error}">
+                                        <div class="alert alert-danger text-center mt-2">
+                                            Error when deleting transport type.
+                                        </div>
+                                    </div>
                                     <label for="transport-type">Transport type:</label>
                                     <select name="transport-type" id="transport-type"
                                             class="form-control form-control-lg">

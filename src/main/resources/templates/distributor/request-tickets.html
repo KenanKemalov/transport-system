@@ -12,6 +12,11 @@
 
 <div class="container">
 <form th:action="@{/request/tickets}" th:method="post" th:object="${request}">
+    <div th:if="${param.accept}">
+        <div class="alert alert-success text-center mt-2">
+            Request is sent successfully and waiting for approval.
+        </div>
+    </div>
     <h3 class="text-center mt-3">Create new ticket request</h3>
 
     <div class="form-outline d-flex justify-content-center">
@@ -36,6 +41,7 @@
             <th scope="col" class="text-center">Transport type</th>
             <th scope="col" class="text-center">Trip type</th>
             <th scope="col" class="text-center">Capacity</th>
+            <th scope="col" class="text-center">Company name</th>
             <th scope="col" class="text-center">Count of tickets</th>
             <th scope="col" class="text-center">Tickets sold count</th>
             <th scope="col" class="text-center">Remaining tickets</th>
@@ -75,6 +81,7 @@
             <td class="text-center" th:text="${t.transportTypeId.transportTypeName}"></td>
             <td class="text-center" th:text="${t.tripTypeId.tripTypeName}"></td>
             <td class="text-center" th:text="${t.capacity}"></td>
+            <td class="text-center" th:text="${t.companyId.companyName}"></td>
             <td class="text-center" th:text="${rep.findAllCountByTripId(t)}"></td>
             <td class="text-center" th:text="${rep.findAllSoldTicketsByTrip(t)}"></td>
             <td class="text-center" th:text="${rep.findAllCountByTripId(t)} - ${rep.findAllSoldTicketsByTrip(t)}"></td>

@@ -6,7 +6,7 @@ $(document).ready(function () {
         "paging": true,
         "lengthChange": false,
         "searching": false,
-        "ordering": true,
+        "ordering": false,
         "info": true,
         "autoWidth": false,
         "pageLength": 5 // Set the number of items per page here
@@ -15,7 +15,7 @@ $(document).ready(function () {
         "paging": true,
         "lengthChange": true,
         "searching": false,
-        "ordering": true,
+        "ordering": false,
         "info": true,
         "autoWidth": false,
         "pageLength": 10 // Set the number of items per page here

@@ -21,7 +21,16 @@
                             <h2 class="text-uppercase text-center mb-5">Delete location</h2>
                             <form th:action="@{/delete/location}" th:method="post">
                                 <div class="form-outline mb-4">
-
+                                    <div th:if="${param.success}">
+                                        <div class="alert alert-success text-center mt-2">
+                                            Location deleted successfully.
+                                        </div>
+                                    </div>
+                                    <div th:if="${param.error}">
+                                        <div class="alert alert-danger text-center mt-2">
+                                            Error when deleting location.
+                                        </div>
+                                    </div>
                                     <label for="location">Location:</label>
                                     <select name="location" id="location" class="form-control form-control-lg">
 <!--                                        <option></option>-->

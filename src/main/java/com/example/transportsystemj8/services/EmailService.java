@@ -52,15 +52,10 @@ public class EmailService {
         context.setVariable("seat", ticket.getSeatNumber());
         context.setVariable("arrival", ticket.getTripId().getArrival() + " " + ticket.getTripId().getTimeOfArrival());
         String htmlContent = templateEngine.process("ticket/ticket-template", context);
-        System.out.println(htmlContent);
 
         // Generate PDF from HTML
-        File htmlFile = new File("ticket/ticket-template");
-        File htmlFile1 = new File(templateEngine.process("ticket/ticket-template", context));
         Document doc = Jsoup.parse(htmlContent, "UTF-8");
         doc.outputSettings().syntax(Document.OutputSettings.Syntax.xml);
-        //OutputStream os = new ByteArrayOutputStream();
-        //OutputStream os = new FileOutputStream("C:/Users/Kenan/IdeaProjects/transport-system/src/main/resources/static/images/test.pdf");
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ITextRenderer renderer = new ITextRenderer();
         SharedContext sharedContext = renderer.getSharedContext();
@@ -70,25 +65,12 @@ public class EmailService {
         renderer.setDocumentFromString(doc.html(), baseurl);
         renderer.layout();
         renderer.createPDF(outputStream);
-        //renderer.createPDF(os);
-        System.out.println(outputStream);
 
-
-        //this works bro
-//        ITextRenderer renderer = new ITextRenderer();
-//        renderer.getSharedContext().setPrint(true);
-//        renderer.getSharedContext().setInteractive(false);
-//        renderer.setDocumentFromString(htmlContent);
-//        renderer.layout();
-//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//        renderer.createPDF(outputStream);
-        // Send mail with attachment
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(message,true);
         messageHelper.setFrom("transport.system2000@gmail.com");
         messageHelper.setTo(toEmail);
         messageHelper.setText("In the attachment you will find the ticket for your trip. Thank you for using our services.");
-//        messageHelper.setText(htmlContent, true);
         messageHelper.setSubject("Trip ticket");
         InputStreamSource attachmentSource = new ByteArrayResource(outputStream.toByteArray());
         messageHelper.addAttachment("ticket.pdf", attachmentSource);

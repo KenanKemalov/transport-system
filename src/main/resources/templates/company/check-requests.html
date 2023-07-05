@@ -13,7 +13,7 @@
 <div th:replace="~{fragments/navigation :: navigation-company}"></div>
 <div th:if="${allRequests.isEmpty()}">
     <div class="container">
-        <div class="alert alert-info text-center">
+        <div class="alert alert-info text-center mt-2">
             There are no requests for tickets at the moment.
         </div>
     </div>
@@ -21,13 +21,27 @@
 <div th:if="${!allRequests.isEmpty()}">
     <div class="container">
         <form th:action="@{/check/requests}" th:method="post" th:object="${request}">
-
+            <div th:if="${param.error}">
+                <div class="alert alert-danger text-center mt-2">
+                    There is not enough capacity for the trip.
+                </div>
+            </div>
+            <div th:if="${param.accept}">
+                <div class="alert alert-success text-center mt-2">
+                    Request accepted.
+                </div>
+            </div>
+            <div th:if="${param.reject}">
+                <div class="alert alert-success text-center mt-2">
+                    Request rejected.
+                </div>
+            </div>
             <h2 class="text-center">Choose a request</h2>
-            <table id="example" class="table table-bordered">
+            <table id="example" class="table table-bordered mt-2">
                 <thead>
                 <tr>
                     <th scope="col" class="text-center">Distributor</th>
-                    <th scope="col" class="text-center">Ticket count</th>
+                    <th scope="col" class="text-center">Requested ticket count</th>
                     <th scope="col" class="text-center">Departure location</th>
                     <th scope="col" class="text-center">Arrival location</th>
                     <th scope="col" class="text-center">Departure date</th>
@@ -35,6 +49,7 @@
                     <th scope="col" class="text-center">Arrival location</th>
                     <th scope="col" class="text-center">Arrival time</th>
                     <th scope="col" class="text-center">Capacity</th>
+                    <th scope="col" class="text-center">Current ticket count</th>
                     <th scope="col" class="text-center">Choose request</th>
                 </tr>
                 </thead>
@@ -49,6 +64,7 @@
                     <td class="text-center" th:text="${req.tripId.arrival}"></td>
                     <td class="text-center" th:text="${req.tripId.timeOfArrival}"></td>
                     <td class="text-center" th:text="${req.tripId.capacity}"></td>
+                    <td class="text-center" th:text="${rep.findAllCountByTripId(req.tripId)}"></td>
                     <td class="text-center">
                         <input type="radio" th:name="selectedRequest" th:value="${req.requestId}" required/>
                     </td>

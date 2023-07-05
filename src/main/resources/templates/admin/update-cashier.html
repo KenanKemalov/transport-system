@@ -10,6 +10,12 @@
 <body>
 <div th:replace="~{fragments/navigation :: navigation-admin}"></div>
 <div class="container">
+    <h2 class="text-uppercase text-center mt-3 mb-4">Update cashier</h2>
+    <div th:if="${param.success}">
+        <div class="alert alert-success text-center mt-2 mb-4">
+            Cashier honorarium has been updated successfully.
+        </div>
+    </div>
     <form th:action="@{/update/cashier}" th:method="post">
         <div class="form-outline d-flex justify-content-center">
             <label for="honorarium" class="form-label text-center">New honorarium:</label>
@@ -33,7 +39,7 @@
             <tbody>
             <tr th:each="c : ${cashiers}">
                 <td class="text-center" th:text="${c.cashierName}"></td>
-                <td class="text-center" th:text="${c.honorarium}"></td>
+                <td class="text-center" th:text="${#numbers.formatDecimal(c.honorarium, 0, 2)} + ' BGN'"></td>
                 <td class="text-center" th:text="${c.user.username}"></td>
                 <td class="text-center">
                     <label>

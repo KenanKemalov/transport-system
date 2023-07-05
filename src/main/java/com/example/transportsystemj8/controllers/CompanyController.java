@@ -21,9 +21,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 import static com.example.transportsystemj8.data.entity.UserRole.CASHIER;
 
@@ -111,6 +109,7 @@ public class CompanyController {
         model.addAttribute("request", new Request());
         model.addAttribute("allRequests", requestRepository.findAllByCompanyIdAndStatus(companyRepository.findCompanyByCompanyId(user.getUserId()),
                 "PENDING"));
+        model.addAttribute("rep", ticketRepository);
         return "company/check-requests";
     }
 
@@ -140,9 +139,9 @@ public class CompanyController {
                 ticketRepository.save(ticket);
             }
             requestRepository.save(request);
-            return new RedirectView("/check/requests");
+            return new RedirectView("/check/requests?accept=true");
         }
-        return new RedirectView("/company/dashboard");
+        return new RedirectView("/check/requests?error=true");
 
     }
 
@@ -152,7 +151,7 @@ public class CompanyController {
         request.setStatus("REJECTED");
         System.out.println(request.toString());
         requestRepository.save(request);
-        return new RedirectView("/check/requests");
+        return new RedirectView("/check/requests?reject=true");
     }
 
     @GetMapping("/check/sold/tickets")
@@ -184,18 +183,13 @@ public class CompanyController {
             else
                 directions.add(direction);
         }
-        directions.sort(new Comparator<Direction>() {
-            @Override
-            public int compare(Direction o1, Direction o2) {
-                return o2.getSoldTickets() - o1.getSoldTickets();
-            }
-        });
 
-//        List<Direction> directions1 = directions;
         if((locationFrom != null && locationTo != null)){
             System.out.println(locationFrom + " " + locationTo);
             directions = directionService.filterTrips(directions, locationFrom, locationTo);
         }
+
+        directions.sort(Collections.reverseOrder());
 
         model.addAttribute("directions", directions);
         model.addAttribute("allTrips", allTrips);

@@ -11,10 +11,15 @@
 <div th:replace="~{fragments/navigation :: navigation-admin}"></div>
 
 <div class="container">
-
+    <h2 class="text-uppercase text-center mt-3 mb-4">Update distributor</h2>
+    <div th:if="${param.success}">
+        <div class="alert alert-success text-center mt-2 mb-4">
+            Distributor honorarium has been updated successfully.
+        </div>
+    </div>
     <form th:action="@{/update/distributor}" th:method="post">
         <div class="form-outline d-flex justify-content-center">
-            <label for="honorarium" class="form-label text-center">New honorarium:</label>
+            <label for="honorarium" class="form-label text-center mt-2">New honorarium:</label>
         </div>
         <div class="form-group mb-4  d-flex justify-content-center">
             <input type="number" id="honorarium" name="honorarium" class="form-control form-control-lg"
@@ -35,7 +40,7 @@
             <tbody>
             <tr th:each="c : ${distributors}">
                 <td th:text="${c.distributorName}" class="text-center"></td>
-                <td th:text="${c.honorarium}" class="text-center"></td>
+                <td th:text="${#numbers.formatDecimal(c.honorarium, 0, 2)} + ' BGN'" class="text-center"></td>
                 <td th:text="${c.user.username}" class="text-center"></td>
                 <td class="text-center">
                     <label>

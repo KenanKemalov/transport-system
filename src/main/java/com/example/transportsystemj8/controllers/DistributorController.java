@@ -121,6 +121,6 @@ public class DistributorController {
         request.setStatus("PENDING");
         requestRepository.save(request);
         System.out.println("request saved");
-        return "redirect:/distributor/dashboard";
+        return "redirect:/request/tickets?success=true";
     }
 }

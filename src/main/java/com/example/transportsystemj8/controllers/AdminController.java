@@ -59,14 +59,16 @@ public class AdminController {
                                             @RequestParam("confirmPassword") String confirmPassword){
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(!new BCryptPasswordEncoder().matches(password, user.getPassword())){
-            System.out.println("wrong password");
-            return "redirect:/default";
+            return "redirect:/update/password?oldpass=true";
         }
-
-        if(userService.validateNewPassword(newPassword, confirmPassword)){
-            userService.updatePassword(user, newPassword);
+        if(userService.validateUser(newPassword)){
+            return "redirect:/update/password?pass=true";
         }
-        return "redirect:/update/password";
+        if(!userService.validateNewPassword(newPassword, confirmPassword)){
+            return "redirect:/update/password?newpass=true";
+        }
+        userService.updatePassword(user, newPassword);
+        return "redirect:/update/password?success=true";
 
     }
 
@@ -136,12 +138,17 @@ public class AdminController {
 
     @PostMapping("/delete/location")
     public String processDeleteLocationForm(@RequestParam("location") String location){
-
-        if(locationService.checkIfLocationExists(locationService.findLocationByName(location))){
-            locationService.deleteLocation(locationService.findLocationByName(location));
-            return "redirect:/delete/location";
+        try {
+            if(locationService.checkIfLocationExists(locationService.findLocationByName(location))){
+                locationService.deleteLocation(locationService.findLocationByName(location));
+                return "redirect:/delete/location?success=true";
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return "redirect:/delete/location?error=true";
         }
-        return "redirect:/delete/location";
+
+        return "redirect:/delete/location?error=true";
     }
 
 
@@ -156,11 +163,17 @@ public class AdminController {
     @PostMapping("/delete/triptype")
     public String processDeleteTripTypeForm(@RequestParam("trip-type") String tripType){
 
-        if(tripTypeService.checkIfTripTypeExists(tripTypeService.findTripTypeByName(tripType))){
-            tripTypeService.deleteTripType(tripTypeService.findTripTypeByName(tripType));
-            return "redirect:/delete/triptype";
+        try {
+            if(tripTypeService.checkIfTripTypeExists(tripTypeService.findTripTypeByName(tripType))){
+                tripTypeService.deleteTripType(tripTypeService.findTripTypeByName(tripType));
+                return "redirect:/delete/triptype?success=true";
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return "redirect:/delete/triptype?error=true";
         }
-        return "redirect:/delete/triptype";
+
+        return "redirect:/delete/triptype?error=true";
     }
 
 
@@ -173,12 +186,17 @@ public class AdminController {
 
     @PostMapping("/delete/transporttype")
     public String processDeleteTransformTypeForm(@RequestParam("transport-type") String transportType){
-
-        if(transportTypeService.checkIfTransportTypeExists(transportTypeService.findTransportTypeByName(transportType))){
-            transportTypeService.deleteTransportType(transportTypeService.findTransportTypeByName(transportType));
-            return "redirect:/delete/transporttype";
+        try{
+            if(transportTypeService.checkIfTransportTypeExists(transportTypeService.findTransportTypeByName(transportType))){
+                transportTypeService.deleteTransportType(transportTypeService.findTransportTypeByName(transportType));
+                return "redirect:/delete/transporttype?success=true";
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return "redirect:/delete/transporttype?error=true";
         }
-        return "redirect:/delete/transporttype";
+
+        return "redirect:/delete/transporttype?error=true";
     }
 
 

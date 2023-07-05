@@ -2,7 +2,7 @@ package com.example.transportsystemj8.data.entity;
 
 import java.util.Objects;
 
-public class Direction {
+public class Direction implements Comparable {
     private String locationFrom;
     private String locationTo;
 
@@ -59,4 +59,15 @@ public class Direction {
         return Objects.equals(locationFrom, direction.locationFrom) && Objects.equals(locationTo, direction.locationTo);
     }
 
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(locationFrom, locationTo);
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Direction direction = (Direction) o;
+        return this.soldTickets - direction.soldTickets;
+    }
 }
