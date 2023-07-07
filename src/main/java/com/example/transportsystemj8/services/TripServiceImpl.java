@@ -31,13 +31,13 @@ public class TripServiceImpl implements TripService{
         return tripRepository.findAllByCompanyId(company);
     }
 
-    public List<Trip> findAllTripsByFullFilter(LocalDate departure, LocalDate arrival, Location locationFrom, Location locationTo){
-        return tripRepository.findAllByDepartureAfterAndArrivalBeforeAndLocationFromAndLocationTo(departure, arrival, locationFrom, locationTo);
-    }
-
-    public List<Trip> findAllByLocations(Location locationFrom, Location locationTo){
-        return tripRepository.findAllByLocationFromAndLocationTo(locationFrom, locationTo);
-    }
+//    public List<Trip> findAllTripsByFullFilter(LocalDate departure, LocalDate arrival, Location locationFrom, Location locationTo){
+//        return tripRepository.findAllByDepartureAfterAndArrivalBeforeAndLocationFromAndLocationTo(departure, arrival, locationFrom, locationTo);
+//    }
+//
+//    public List<Trip> findAllByLocations(Location locationFrom, Location locationTo){
+//        return tripRepository.findAllByLocationFromAndLocationTo(locationFrom, locationTo);
+//    }
 
     public List<Trip> filterTrips(LocalDate departure, LocalDate arrival, Location locationFrom, Location locationTo, TransportType transportType){
         List<Trip> allTrips = findAll();

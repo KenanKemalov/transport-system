@@ -26,13 +26,13 @@ public class UserService implements UserDetailsService {
     private Pattern passwordPattern = Pattern.compile("^(?=.*?[0-9]).{8,}$");
 
     //@Autowired
-    private AuthenticationManager authenticationManager;
-    private PasswordEncoder passwordEncoder;
+//    private AuthenticationManager authenticationManager;
+//    private PasswordEncoder passwordEncoder;
     private UserRepository userRepository;
 
     public UserService(AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder, UserRepository userRepository) {
-        this.authenticationManager = authenticationManager;
-        this.passwordEncoder = passwordEncoder;
+//        this.authenticationManager = authenticationManager;
+//        this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
     }
 
@@ -72,16 +72,5 @@ public class UserService implements UserDetailsService {
     public void updatePassword(User user, String newPassword){
         user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
         userRepository.save(user);
-    }
-
-    public Optional<User> authenticateUser(String username, String password) {
-        try {
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            return userRepository.findByUsername(userDetails.getUsername());//.orElse(null);
-        } catch (AuthenticationException e) {
-            return Optional.empty();
-        }
     }
 }

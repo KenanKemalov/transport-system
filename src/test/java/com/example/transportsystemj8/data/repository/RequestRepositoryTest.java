@@ -24,16 +24,9 @@ public class RequestRepositoryTest {
     @Mock
     private RequestRepository requestRepository;
 
-//    @BeforeEach
-//    public void setUp() {
-//        // Create a mock of the RequestRepository
-//        requestRepository = mock(RequestRepository.class);
-//    }
-
     @Test
-    public void testFindAllByCompanyIdAndStatusTrue() {
+    public void testFindAllByCompanyIdAndStatus() {
         User company = new User();
-//        company.setCompany();
         company.setUsername("company");
         company.setPassword("company");
 
@@ -77,20 +70,15 @@ public class RequestRepositoryTest {
         request3.setDistributorId(testDistributor);
         request3.setCompanyId(testCompany);
 
-        // Create a list of Requests with the expected results
         List<Request> expectedRequests = Arrays.asList(request1, request2, request3);
 
-        // Define the behavior of the mock requestRepository when the method is called
         when(requestRepository.findAllByCompanyIdAndStatus(testCompany, testStatus))
                 .thenReturn(expectedRequests);
 
-        // Call the method in the mock requestRepository
         List<Request> actualRequests = requestRepository.findAllByCompanyIdAndStatus(testCompany, testStatus);
 
-        // Verify that the method was called with the correct arguments
         verify(requestRepository).findAllByCompanyIdAndStatus(testCompany, testStatus);
 
-        // Assert that the returned list of requests matches the expected results
         assertEquals(expectedRequests, actualRequests);
     }
 
