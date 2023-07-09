@@ -21,7 +21,6 @@ public class LocationServiceImpl implements LocationService {
     }
 
     public boolean checkIfLocationExists(Location location){
-//        Optional<User> foundUser = userRepository.findByUsernameAndUserRole(user.getUsername(), user.getUserRole());
         Location foundLocation = locationRepository.findByLocationName(location.getLocationName());
         return foundLocation != null;
     }

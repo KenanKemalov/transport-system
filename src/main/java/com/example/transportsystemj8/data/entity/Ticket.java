@@ -25,7 +25,7 @@ public class Ticket implements Serializable {
     private LocalDate purchaseDate;
 
     @ManyToOne
-    @JoinColumn(name = "cashierId") //changed from nullable=false to true, so that a new ticket can be created without it being sold
+    @JoinColumn(name = "cashierId")
     private Cashier cashierId;
 
     @ManyToOne

@@ -17,13 +17,6 @@ public class Company implements Serializable {
 
     @Column(name = "companyName", nullable = false)
     private String companyName;
-
-//    @Column(name = "username", nullable = false)
-//    private String username;
-//
-//    @Column(name = "password", nullable = false)
-//    private String password;
-
     @Column(name = "honorarium", nullable = false)
     private Double honorarium;
 
@@ -51,41 +44,6 @@ public class Company implements Serializable {
                 //", tripSet3=" + tripSet3 +
                 '}';
     }
-
-    //    public Company(String username, String password) {
-//        this.username = username;
-//        this.password = password;
-//    }
-//
-//
-//
-//    public Company(String companyName, String username, String password, double honorarium) {
-//        this.companyName = companyName;
-//        this.username = username;
-//        this.password = password;
-//        this.honorarium = honorarium;
-//    }
-
-    /*public Company(int companyId, String companyName, String username, String password, double honorarium) {
-        this.companyId = companyId;
-        this.companyName = companyName;
-        this.username = username;
-        this.password = password;
-        this.honorarium = honorarium;
-    }*/
-
-//    @Override
-//    public String toString() {
-//        return "Company{" +
-//                "companyId=" + companyId +
-//                ", companyName='" + companyName + '\'' +
-//                ", username='" + username + '\'' +
-//                ", password='" + password + '\'' +
-//                ", honorarium=" + honorarium +
-//                ", requestSet3=" + requestSet3 +
-//                '}';
-//    }
-
     public Integer getCompanyId() {
         return companyId;
     }
@@ -109,22 +67,6 @@ public class Company implements Serializable {
     public void setUser(User user) {
         this.user = user;
     }
-
-    //    public String getUsername() {
-//        return username;
-//    }
-//
-//    public void setUsername(String username) {
-//        this.username = username;
-//    }
-//
-//    public String getPassword() {
-//        return password;
-//    }
-//
-//    public void setPassword(String password) {
-//        this.password = password;
-//    }
 
     public Double getHonorarium() {
         return honorarium;
@@ -150,16 +92,4 @@ public class Company implements Serializable {
         this.tripSet3 = tripSet3;
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Company company = (Company) o;
-//        return Objects.equals(username, company.username);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(username);
-//    }
 }

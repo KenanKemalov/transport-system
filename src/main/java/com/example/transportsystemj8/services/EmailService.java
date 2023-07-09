@@ -40,8 +40,6 @@ public class EmailService {
     @Autowired
     private SpringTemplateEngine templateEngine;
 
-
-    //still needs to be edited - does not include CSS in the pdf attachment
     public void sendEmail(String toEmail, Ticket ticket) throws MessagingException, IOException {
         Context context = new Context();
         context.setVariable("depstation", ticket.getTripId().getLocationFrom().getLocationName());
@@ -53,7 +51,6 @@ public class EmailService {
         context.setVariable("arrival", ticket.getTripId().getArrival() + " " + ticket.getTripId().getTimeOfArrival());
         String htmlContent = templateEngine.process("ticket/ticket-template", context);
 
-        // Generate PDF from HTML
         Document doc = Jsoup.parse(htmlContent, "UTF-8");
         doc.outputSettings().syntax(Document.OutputSettings.Syntax.xml);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

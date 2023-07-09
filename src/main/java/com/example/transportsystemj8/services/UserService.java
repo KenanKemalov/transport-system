@@ -25,14 +25,9 @@ public class UserService implements UserDetailsService {
 
     private Pattern passwordPattern = Pattern.compile("^(?=.*?[0-9]).{8,}$");
 
-    //@Autowired
-//    private AuthenticationManager authenticationManager;
-//    private PasswordEncoder passwordEncoder;
     private UserRepository userRepository;
 
-    public UserService(AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder, UserRepository userRepository) {
-//        this.authenticationManager = authenticationManager;
-//        this.passwordEncoder = passwordEncoder;
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -47,13 +42,11 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean checkIfUserExists(User user){
-//        Optional<User> foundUser = userRepository.findByUsernameAndUserRole(user.getUsername(), user.getUserRole());
         Optional<User> foundUser = userRepository.findByUsername(user.getUsername());
         return foundUser.isPresent();
     }
 
     public void saveUser(User user) {
-        // Perform any additional validation or logic
         userRepository.save(user);
     }
 
@@ -66,7 +59,6 @@ public class UserService implements UserDetailsService {
         Matcher passwordMatcher = passwordPattern.matcher(password);
         Matcher confirmPasswordMatcher = passwordPattern.matcher(confirmPassword);
         return passwordMatcher.matches() && confirmPasswordMatcher.matches() && password.equals(confirmPassword);
-//        return password.equals(confirmPassword);
     }
 
     public void updatePassword(User user, String newPassword){

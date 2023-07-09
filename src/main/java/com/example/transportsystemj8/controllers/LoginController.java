@@ -30,7 +30,7 @@ public class LoginController {
     @GetMapping("/login")
     public String showLogin(Model model) {
         model.addAttribute("user", new User());
-        return "login";  // This will map to the common login page
+        return "login";
     }
 
     @GetMapping("/default")
@@ -54,5 +54,4 @@ public class LoginController {
         }
         return "redirect:/r/";
     }
-
 }

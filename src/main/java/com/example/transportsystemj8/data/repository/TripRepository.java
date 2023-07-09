@@ -20,11 +20,4 @@ public interface TripRepository extends CrudRepository<Trip, Integer> {
 
     Trip findTripByTripId(Integer id);
 
-    List<Trip> findAllByDepartureAfterAndArrivalBeforeAndLocationFromAndLocationTo(LocalDate departure, LocalDate arrival, Location locationFrom, Location locationTo);
-
-    List<Trip> findAllByLocationFromAndLocationTo(Location locationFrom, Location locationTo);
-
-    List<Trip> findAllByTransportTypeId(TransportType transportType);
-
-    List<Trip> findAllByDepartureAfterAndArrivalBefore(LocalDate departure, LocalDate arrival);
 }

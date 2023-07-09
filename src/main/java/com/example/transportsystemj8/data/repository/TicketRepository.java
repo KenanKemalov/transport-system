@@ -22,5 +22,4 @@ public interface TicketRepository extends CrudRepository<Ticket, Integer> {
 
     List<Ticket> findAllByTripId(Trip trip);
 
-
 }

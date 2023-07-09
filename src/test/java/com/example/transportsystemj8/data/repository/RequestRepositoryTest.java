@@ -34,7 +34,6 @@ public class RequestRepositoryTest {
         distributor.setUsername("distributor");
         distributor.setPassword("distributor");
 
-        // Create a test Company object
         Company testCompany = new Company();
         testCompany.setCompanyName("Test Company");
         testCompany.setHonorarium(100.0);
@@ -45,10 +44,8 @@ public class RequestRepositoryTest {
         testDistributor.setHonorarium(100.0);
         testDistributor.setUser(distributor);
 
-        // Create a test status
         String testStatus = "PENDING";
 
-        // Create some test Request objects
         Request request1 = new Request();
         request1.setTicketCount(5);
         request1.setStatus("PENDING");
@@ -85,7 +82,6 @@ public class RequestRepositoryTest {
     @Test
     public void testFindAllByCompanyIdAndStatusFalse() {
         User company = new User();
-//        company.setCompany();
         company.setUsername("company");
         company.setPassword("company");
 
@@ -93,7 +89,6 @@ public class RequestRepositoryTest {
         distributor.setUsername("distributor");
         distributor.setPassword("distributor");
 
-        // Create a test Company object
         Company testCompany = new Company();
         testCompany.setCompanyName("Test Company");
         testCompany.setHonorarium(100.0);
@@ -104,10 +99,8 @@ public class RequestRepositoryTest {
         testDistributor.setHonorarium(100.0);
         testDistributor.setUser(distributor);
 
-        // Create a test status
         String testStatus = "PENDING";
 
-        // Create some test Request objects
         Request request1 = new Request();
         request1.setTicketCount(5);
         request1.setStatus("PENDING");
@@ -129,20 +122,15 @@ public class RequestRepositoryTest {
         request3.setDistributorId(testDistributor);
         request3.setCompanyId(testCompany);
 
-        // Create a list of Requests with the expected results
         List<Request> expectedRequests = Arrays.asList(request1, request2, request3);
 
-        // Define the behavior of the mock requestRepository when the method is called
         when(requestRepository.findAllByCompanyIdAndStatus(testCompany, testStatus))
                 .thenReturn(expectedRequests);
 
-        // Call the method in the mock requestRepository
         List<Request> actualRequests = requestRepository.findAllByCompanyIdAndStatus(testCompany, testStatus);
 
-        // Verify that the method was called with the correct arguments
         verify(requestRepository).findAllByCompanyIdAndStatus(testCompany, testStatus);
 
-        // Assert that the returned list of requests matches the expected results
         assertEquals(expectedRequests, actualRequests);
     }
 }

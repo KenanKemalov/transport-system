@@ -22,7 +22,6 @@ public class TripServiceImpl implements TripService{
         tripRepository.save(trip);
     }
 
-
     public List<Trip> findAll(){
         return tripRepository.findAllTrips();
     }
@@ -31,21 +30,12 @@ public class TripServiceImpl implements TripService{
         return tripRepository.findAllByCompanyId(company);
     }
 
-//    public List<Trip> findAllTripsByFullFilter(LocalDate departure, LocalDate arrival, Location locationFrom, Location locationTo){
-//        return tripRepository.findAllByDepartureAfterAndArrivalBeforeAndLocationFromAndLocationTo(departure, arrival, locationFrom, locationTo);
-//    }
-//
-//    public List<Trip> findAllByLocations(Location locationFrom, Location locationTo){
-//        return tripRepository.findAllByLocationFromAndLocationTo(locationFrom, locationTo);
-//    }
-
     public List<Trip> filterTrips(LocalDate departure, LocalDate arrival, Location locationFrom, Location locationTo, TransportType transportType){
         List<Trip> allTrips = findAll();
         List<Trip> filteredList = new ArrayList<>();
 
         for(Trip t : allTrips) {
             if(((locationFrom == null && locationTo == null) || (t.getLocationFrom().equals(locationFrom) && t.getLocationTo().equals(locationTo)))
-                    //tuk ne sum siguren dali da filtrira samo za departure
                 && ((departure == null && arrival == null) || (!t.getDeparture().isBefore(departure) && !t.getDeparture().isAfter(arrival)))
                     && (transportType == null || t.getTransportTypeId().equals(transportType))){
                 filteredList.add(t);

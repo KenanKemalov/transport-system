@@ -250,7 +250,4 @@ public class AdminController {
         distributorService.saveDistributor(distributor);
         return "redirect:/update/distributor";
     }
-
-
-
 }
